@@ -37,10 +37,21 @@ class _CustomersScreenState extends State<CustomersScreen> {
                                   customerViewModel.customerListModel[index];
                               return Container(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(customerModel.nome),
                                     Text(
                                       customerModel.sobrenome,
+                                    ),
+                                    Text(
+                                      customerModel.telefone,
+                                    ),
+                                    Text(
+                                      customerModel.cpf,
+                                    ),
+                                    Text(
+                                      customerModel.dataNascimento.toString(),
                                     ),
                                   ],
                                 ),

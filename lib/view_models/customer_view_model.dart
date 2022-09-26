@@ -27,9 +27,9 @@ class CustomerViewModel extends ChangeNotifier {
     customerListModel.forEach((customerId, customerValue) {
       _customerListModel.add(Customer(
           nome: 'TESTE',
-          sobrenome: 'TESTE',
-          telefone: 'TESTE',
-          cpf: 'TESTE',
+          sobrenome: 'sobrenome',
+          telefone: 'telefone',
+          cpf: 'cpf',
           dataNascimento: DateTime.now()));
       // _customerListModel.add(Customer(
       //     nome: customerValue['name'],
@@ -51,5 +51,17 @@ class CustomerViewModel extends ChangeNotifier {
       print(response.errorResponse);
     }
     setLoading(false);
+  }
+
+  saveCustomer(Map<String, Object> data) async {
+    //setLoading(true);
+    final customer = Customer(
+        nome: data['nome'] as String,
+        sobrenome: data['sobrenome'] as String,
+        cpf: data['CPF'] as String,
+        telefone: data['telefone'] as String,
+        dataNascimento: data['dataNascimento'] as DateTime);
+    var response = await CustomerService.saveCustomerService(customer);
+    //setLoading(false);
   }
 }

@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
@@ -24,6 +22,22 @@ class CustomerService {
       //       code: NO_INTERNET, errorResponse: 'No Internet Connection');
       // } on FormatException {
       //   return Failure(code: INVALID_FORMAT, errorResponse: 'Invalid Format');
+    } catch (e) {
+      return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Response');
+    }
+  }
+
+  static Future<Object> saveCustomerService(Customer customerData) async {
+    try {
+      final response = await http.post(Uri.parse('${URL_BASE}/costumers.json'),
+          body: jsonEncode({
+            "nome": customerData.nome,
+            "sobrenome": customerData.sobrenome,
+            "CPF": customerData.cpf,
+            "telefone": customerData.telefone,
+            //"dataNascimento": customerData.dataNascimento
+          }));
+      return response;
     } catch (e) {
       return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Response');
     }
