@@ -55,4 +55,8 @@ class CustomerViewModel extends ChangeNotifier {
     _customerListModel.add(customer);
     setLoading(false);
   }
+
+  int getItensCount() {
+    return _customerListModel.length;
+  }
 }
