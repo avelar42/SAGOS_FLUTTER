@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sagos_mobile/model/customer.dart';
+import '../utils/app_routes.dart';
 
 class CustomerItem extends StatelessWidget {
   const CustomerItem(this.customer, {Key? key}) : super(key: key);
@@ -19,7 +20,9 @@ class CustomerItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_FORM_EDIT);
+              },
               icon: Icon(Icons.edit),
               color: Colors.blue,
             ),

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
 
-class CustomerFormScreen extends StatefulWidget {
-  const CustomerFormScreen({Key? key}) : super(key: key);
+class CustomerFormEditScreen extends StatefulWidget {
+  const CustomerFormEditScreen({Key? key}) : super(key: key);
 
   @override
-  _CustomerFormScreenState createState() => _CustomerFormScreenState();
+  _CustomerFormEditScreenState createState() => _CustomerFormEditScreenState();
 }
 
-class _CustomerFormScreenState extends State<CustomerFormScreen> {
+class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
 
@@ -25,7 +25,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Formulario de clientes'), actions: [
+      appBar: AppBar(title: Text('Editar dados Cliente'), actions: [
         IconButton(onPressed: _submitForm, icon: Icon(Icons.save))
       ]),
       body: Padding(
@@ -34,6 +34,21 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             key: _formKey,
             child: ListView(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: ElevatedButton(
+                          onPressed: () {}, child: Text('Ativos')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: ElevatedButton(
+                          onPressed: () {}, child: Text('Enderecos')),
+                    )
+                  ],
+                ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Nome'),
                   onSaved: (name) => _formData['nome'] = name ?? '',
@@ -54,7 +69,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Data Nascimento'),
                   onSaved: (birth) =>
-                      _formData['dataNascimento'] = DateTime.now() ?? '',
+                      _formData['dataNascimento'] = DateTime.now(),
                 )
               ],
             )),

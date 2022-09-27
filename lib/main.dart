@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sagos_mobile/utils/app_routes.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:sagos_mobile/views/customerform_screen.dart';
+import 'package:sagos_mobile/views/customerformedit_screen.dart';
 import 'package:sagos_mobile/views/customers_screen.dart';
 import 'package:sagos_mobile/views/dashboard_screen.dart';
 
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
           routes: {
             AppRoutes.HOME: (context) => DashBoardScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),
-            AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen()
+            AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen(),
+            AppRoutes.CUSTOMER_FORM_EDIT: (context) => CustomerFormEditScreen()
           },
         ));
   }
