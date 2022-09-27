@@ -14,6 +14,13 @@ class CustomersScreen extends StatefulWidget {
 
 class _CustomersScreenState extends State<CustomersScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<CustomerViewModel>(context, listen: false).getCustomers();
+  }
+
+  @override
   Widget build(BuildContext context) {
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
 

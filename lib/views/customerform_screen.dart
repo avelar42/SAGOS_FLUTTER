@@ -14,11 +14,13 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   final _formData = Map<String, Object>();
 
   //TO DO: IMPLEMENT PROVIDER HERE
-  // _submitForm() {
-  //   _formKey.currentState?.save();
-  //   print(_formData);
-  //   return;
-  // }
+  Future<void> _submitForm() async {
+    _formKey.currentState?.save();
+    await Provider.of<CustomerViewModel>(context, listen: false)
+        .saveCustomer(_formData);
+    print(_formData);
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text('Formulario de clientes'), actions: [
-        IconButton(
-            onPressed: () {
-              _formKey.currentState?.save();
-              customerViewModel.saveCustomer(_formData);
-              print(_formData);
-            },
-            icon: Icon(Icons.save))
+        IconButton(onPressed: _submitForm, icon: Icon(Icons.save))
       ]),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

@@ -7,10 +7,6 @@ class CustomerViewModel extends ChangeNotifier {
   bool _loading = false;
   List<Customer> _customerListModel = [];
 
-  CustomerViewModel() {
-    getCustomers();
-  }
-
   //GETTERS
   bool get loading => _loading;
   List<Customer> get customerListModel => _customerListModel;
