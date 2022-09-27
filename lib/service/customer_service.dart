@@ -8,7 +8,7 @@ import '../utils/constants.dart';
 class CustomerService {
   static Future<Object> getCustomers() async {
     try {
-      var url = Uri.parse('${URL_BASE}/.json');
+      var url = Uri.parse('${URL_BASE}/costumers.json');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
