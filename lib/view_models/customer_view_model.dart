@@ -34,6 +34,9 @@ class CustomerViewModel extends ChangeNotifier {
     var response = await CustomerService.getCustomers();
     if (response is Success) {
       //Map<String, dynamic> data = jsonDecode(response);
+      if (_customerListModel.isNotEmpty) {
+        _customerListModel = [];
+      }
       setCustomerListModel(response.response);
     }
     if (response is Failure) {
@@ -49,6 +52,20 @@ class CustomerViewModel extends ChangeNotifier {
     customer.id = response.toString();
     _customerListModel.add(customer);
     setLoading(false);
+  }
+
+  Future<void> removeCustomer(Customer customer) async {
+    var index = _customerListModel.indexWhere((c) => c.id == customer.id);
+    if (index >= 0) {
+      setLoading(true);
+      var response = await CustomerService.removeCustomerService(customer);
+      if (response == true) {
+        _customerListModel.remove(customer);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    }
   }
 
   updateCustomer(Map<String, Object> data) async {

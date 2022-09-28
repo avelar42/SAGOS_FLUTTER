@@ -59,4 +59,14 @@ class CustomerService {
       return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Response');
     }
   }
+
+  static Future<bool> removeCustomerService(Customer customerData) async {
+    final response = await http
+        .delete(Uri.parse('${URL_BASE_CUSTOMERS}/${customerData.id}.json'));
+    if (response.statusCode <= 400) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
