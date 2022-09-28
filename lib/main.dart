@@ -31,14 +31,16 @@ class MyApp extends StatelessWidget {
               // or simply save your changes to "hot reload" in a Flutter IDE).
               // Notice that the counter didn't reset back to zero; the application
               // is not restarted.
-              primarySwatch: Colors.blue,
-              brightness: Brightness.light),
+              primarySwatch: Colors.indigo,
+              brightness: Brightness.light,
+              fontFamily: 'Lato'),
           routes: {
             AppRoutes.HOME: (context) => DashBoardScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),
             AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen(),
             AppRoutes.CUSTOMER_FORM_EDIT: (context) => CustomerFormEditScreen()
           },
+          debugShowCheckedModeBanner: false,
         ));
   }
 }

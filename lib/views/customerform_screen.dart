@@ -24,41 +24,45 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
     return Scaffold(
       appBar: AppBar(title: Text('Formulario de clientes'), actions: [
         IconButton(onPressed: _submitForm, icon: Icon(Icons.save))
       ]),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Nome'),
-                  onSaved: (name) => _formData['nome'] = name ?? '',
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Sobrenome'),
-                  onSaved: (lastname) =>
-                      _formData['sobrenome'] = lastname ?? '',
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'CPF'),
-                  onSaved: (cpf) => _formData['CPF'] = cpf ?? '',
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Telefone'),
-                  onSaved: (phone) => _formData['telefone'] = phone ?? '',
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Data Nascimento'),
-                  onSaved: (birth) =>
-                      _formData['dataNascimento'] = DateTime.now() ?? '',
-                )
-              ],
-            )),
-      ),
+      body: customerViewModel.loading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Nome'),
+                        onSaved: (name) => _formData['nome'] = name ?? '',
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Sobrenome'),
+                        onSaved: (lastname) =>
+                            _formData['sobrenome'] = lastname ?? '',
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'CPF'),
+                        onSaved: (cpf) => _formData['CPF'] = cpf ?? '',
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Telefone'),
+                        onSaved: (phone) => _formData['telefone'] = phone ?? '',
+                      ),
+                      TextFormField(
+                        decoration:
+                            InputDecoration(labelText: 'Data Nascimento'),
+                        onSaved: (birth) =>
+                            _formData['dataNascimento'] = DateTime.now() ?? '',
+                      )
+                    ],
+                  )),
+            ),
     );
   }
 }
