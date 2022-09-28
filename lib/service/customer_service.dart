@@ -8,7 +8,7 @@ import '../utils/constants.dart';
 class CustomerService {
   static Future<Object> getCustomers() async {
     try {
-      var url = Uri.parse('${URL_BASE}/costumers.json');
+      var url = Uri.parse('${URL_BASE_CUSTOMERS}.json');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
@@ -29,15 +29,32 @@ class CustomerService {
 
   static Future<Object> saveCustomerService(Customer customerData) async {
     try {
-      final response = await http.post(Uri.parse('${URL_BASE}/costumers.json'),
-          body: jsonEncode({
-            "nome": customerData.nome,
-            "sobrenome": customerData.sobrenome,
-            "CPF": customerData.cpf,
-            "telefone": customerData.telefone,
-            //"dataNascimento": customerData.dataNascimento
-          }));
-      return response;
+      if (customerData.id.isEmpty) {
+        final response =
+            await http.post(Uri.parse('${URL_BASE_CUSTOMERS}.json'),
+                body: jsonEncode({
+                  "nome": customerData.nome,
+                  "sobrenome": customerData.sobrenome,
+                  "CPF": customerData.cpf,
+                  "telefone": customerData.telefone,
+                  //"dataNascimento": customerData.dataNascimento
+                }));
+        final id = jsonDecode(response.body)['name'];
+        return id;
+      } else {
+        final response = await http.post(
+            Uri.parse('${URL_BASE_CUSTOMERS}/${customerData.id}.json'),
+            body: jsonEncode({
+              //"id": customerData.id,
+              "nome": customerData.nome,
+              "sobrenome": customerData.sobrenome,
+              "CPF": customerData.cpf,
+              "telefone": customerData.telefone,
+              //"dataNascimento": customerData.dataNascimento
+            }));
+        final id = jsonDecode(response.body)['name'];
+        return id;
+      }
     } catch (e) {
       return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Response');
     }

@@ -21,7 +21,8 @@ class CustomerItem extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_FORM_EDIT);
+                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_FORM_EDIT,
+                    arguments: customer);
               },
               icon: Icon(Icons.edit),
               color: Colors.blue,

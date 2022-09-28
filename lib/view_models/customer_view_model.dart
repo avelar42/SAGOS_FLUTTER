@@ -44,19 +44,47 @@ class CustomerViewModel extends ChangeNotifier {
 
   saveCustomer(Map<String, Object> data) async {
     setLoading(true);
+    final customer = CustomerMapToObjectWithoutId(data);
+    var response = await CustomerService.saveCustomerService(customer);
+    customer.id = response.toString();
+    _customerListModel.add(customer);
+    setLoading(false);
+  }
+
+  updateCustomer(Map<String, Object> data) async {
+    final customer = CustomerMapToObjectWithId(data);
+    var index = _customerListModel.indexWhere((c) => c.id == customer.id);
+    if (index >= 0) {
+      setLoading(true);
+      var response = await CustomerService.saveCustomerService(customer);
+      _customerListModel[index] = customer;
+      setLoading(false);
+    }
+  }
+
+  int getItensCount() {
+    return _customerListModel.length;
+  }
+
+  Customer CustomerMapToObjectWithoutId(Map<String, Object> data) {
     final customer = Customer(
-        id: data['nome'] as String,
+        id: '',
         nome: data['nome'] as String,
         sobrenome: data['sobrenome'] as String,
         cpf: data['CPF'] as String,
         telefone: data['telefone'] as String,
         dataNascimento: data['dataNascimento'] as DateTime);
-    var response = await CustomerService.saveCustomerService(customer);
-    _customerListModel.add(customer);
-    setLoading(false);
+    return customer;
   }
 
-  int getItensCount() {
-    return _customerListModel.length;
+  Customer CustomerMapToObjectWithId(Map<String, Object> data) {
+    final customer = Customer(
+        id: data['id'] as String,
+        nome: data['nome'] as String,
+        sobrenome: data['sobrenome'] as String,
+        cpf: data['CPF'] as String,
+        telefone: data['telefone'] as String,
+        dataNascimento: data['dataNascimento'] as DateTime);
+    return customer;
   }
 }

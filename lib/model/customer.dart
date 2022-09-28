@@ -1,9 +1,3 @@
-// To parse this JSON data, do
-//
-//     final customer = customerFromJson(jsonString);
-
-import 'dart:convert';
-
 class Customer {
   Customer({
     required this.id,
