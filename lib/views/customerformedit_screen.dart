@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +14,14 @@ class CustomerFormEditScreen extends StatefulWidget {
 class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
+  DateTime? pickedDate = null;
 
   //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
     _formKey.currentState?.save();
+    if (pickedDate != null) {
+      _formData['dataNascimento'] = pickedDate.toString();
+    }
     await Provider.of<CustomerViewModel>(context, listen: false)
         .updateCustomer(_formData);
     print(_formData);
@@ -37,8 +42,25 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
         _formData['cpf'] = customer.cpf;
         _formData['telefone'] = customer.telefone;
         _formData['dataNascimento'] = customer.dataNascimento;
+        pickedDate = customer.dataNascimento;
       }
     }
+  }
+
+  _showDatePicker() async {
+    var pickedDateForm = await showDatePicker(
+        context: context,
+        initialDate:
+            pickedDate == null ? DateTime.now() : pickedDate as DateTime,
+        firstDate: DateTime(1940),
+        lastDate: DateTime.now());
+    if (pickedDateForm == null) {
+      return null;
+    }
+    setState(() {
+      _formData['dataNascimento'] = pickedDateForm;
+      pickedDate = pickedDateForm;
+    });
   }
 
   @override
@@ -102,13 +124,32 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] = phone ?? '',
                       ),
-                      TextFormField(
-                        initialValue: _formData['dataNascimento']?.toString(),
-                        decoration:
-                            InputDecoration(labelText: 'Data Nascimento'),
-                        onSaved: (birth) =>
-                            _formData['dataNascimento'] = DateTime.now(),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              right: 0, left: 0, top: 10, bottom: 10)),
+                      Text('Data Nascimento'),
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(_formData['dataNascimento'] == null
+                                ? 'Insira uma data'
+                                : DateFormat('d/M/y').format(DateTime.parse(
+                                    _formData['dataNascimento'].toString()))),
+                            IconButton(
+                              onPressed: _showDatePicker,
+                              icon: Icon(Icons.calendar_month),
+                              color: Theme.of(context).primaryColor,
+                            )
+                          ],
+                        ),
                       )
+                      // TextFormField(
+                      //   initialValue: _formData['dataNascimento']?.toString(),
+                      //   decoration:
+                      //       InputDecoration(labelText: 'Data Nascimento'),
+                      //   onSaved: (birth) =>
+                      //       _formData['dataNascimento'] = DateTime.now(),
+                      // )
                     ],
                   )),
             ),

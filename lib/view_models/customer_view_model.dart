@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
 import 'package:sagos_mobile/service/customer_service.dart';
@@ -26,7 +25,7 @@ class CustomerViewModel extends ChangeNotifier {
           sobrenome: customerValue['sobrenome'],
           telefone: customerValue['telefone'],
           cpf: customerValue['CPF'],
-          dataNascimento: DateTime.now()));
+          dataNascimento: DateTime.parse(customerValue['dataNascimento'])));
     });
   }
 
@@ -102,7 +101,7 @@ class CustomerViewModel extends ChangeNotifier {
         sobrenome: data['sobrenome'] as String,
         cpf: data['CPF'] as String,
         telefone: data['telefone'] as String,
-        dataNascimento: data['dataNascimento'] as DateTime);
+        dataNascimento: DateTime.parse(data['dataNascimento'].toString()));
     return customer;
   }
 }
