@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
 import 'package:sagos_mobile/service/customer_service.dart';
@@ -46,12 +47,12 @@ class CustomerViewModel extends ChangeNotifier {
   }
 
   saveCustomer(Map<String, Object> data) async {
-    setLoading(true);
+    await setLoading(true);
     final customer = CustomerMapToObjectWithoutId(data);
     var response = await CustomerService.saveCustomerService(customer);
     customer.id = response.toString();
     _customerListModel.add(customer);
-    setLoading(false);
+    await setLoading(false);
   }
 
   Future<void> removeCustomer(Customer customer) async {
@@ -90,7 +91,7 @@ class CustomerViewModel extends ChangeNotifier {
         sobrenome: data['sobrenome'] as String,
         cpf: data['CPF'] as String,
         telefone: data['telefone'] as String,
-        dataNascimento: data['dataNascimento'] as DateTime);
+        dataNascimento: DateTime.parse(data['dataNascimento'].toString()));
     return customer;
   }
 

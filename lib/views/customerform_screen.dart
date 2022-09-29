@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -12,14 +13,34 @@ class CustomerFormScreen extends StatefulWidget {
 class _CustomerFormScreenState extends State<CustomerFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
+  DateTime? pickedDate = null;
 
   //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
     _formKey.currentState?.save();
+
+    if (pickedDate != null) {
+      _formData['dataNascimento'] = pickedDate.toString();
+    }
     await Provider.of<CustomerViewModel>(context, listen: false)
         .saveCustomer(_formData);
     print(_formData);
     Navigator.of(context).pop();
+  }
+
+  _showDatePicker() async {
+    var pickedDateForm = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1940),
+        lastDate: DateTime.now());
+    if (pickedDateForm == null) {
+      return null;
+    }
+    setState(() {
+      _formData['dataNascimento'] = pickedDateForm;
+      pickedDate = pickedDateForm;
+    });
   }
 
   @override
@@ -40,26 +61,55 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Nome'),
                         onSaved: (name) => _formData['nome'] = name ?? '',
+                        textInputAction: TextInputAction.next,
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Sobrenome'),
                         onSaved: (lastname) =>
                             _formData['sobrenome'] = lastname ?? '',
+                        textInputAction: TextInputAction.next,
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'CPF'),
                         onSaved: (cpf) => _formData['CPF'] = cpf ?? '',
+                        keyboardType: TextInputType.number,
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] = phone ?? '',
+                        keyboardType: TextInputType.phone,
                       ),
-                      TextFormField(
-                        decoration:
-                            InputDecoration(labelText: 'Data Nascimento'),
-                        onSaved: (birth) =>
-                            _formData['dataNascimento'] = DateTime.now() ?? '',
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 0, right: 0, top: 15, bottom: 15),
+                        child: Text(
+                          'Data de nascimento',
+                          style:
+                              TextStyle(fontSize: 15, color: Colors.blueGrey),
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(_formData['dataNascimento'] == null
+                                ? 'Insira uma data'
+                                : DateFormat('d/M/y').format(
+                                    _formData['dataNascimento'] as DateTime)),
+                            IconButton(
+                              onPressed: _showDatePicker,
+                              icon: Icon(Icons.calendar_month),
+                              color: Theme.of(context).primaryColor,
+                            )
+                          ],
+                        ),
                       )
+
+                      // TextFormField(
+                      //   decoration:
+                      //       InputDecoration(labelText: 'Data Nascimento'),
+                      //   onSaved: (birth) =>
+                      //       _formData['dataNascimento'] = DateTime.now() ?? '',
+                      // )
                     ],
                   )),
             ),

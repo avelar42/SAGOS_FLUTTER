@@ -37,7 +37,8 @@ class CustomerService {
                   "sobrenome": customerData.sobrenome,
                   "CPF": customerData.cpf,
                   "telefone": customerData.telefone,
-                  //"dataNascimento": customerData.dataNascimento
+                  "dataNascimento":
+                      customerData.dataNascimento.toIso8601String()
                 }));
         final id = jsonDecode(response.body)['name'];
         return id;
