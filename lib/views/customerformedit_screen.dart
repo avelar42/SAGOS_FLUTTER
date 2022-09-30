@@ -17,6 +17,16 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
   final _formData = Map<String, Object>();
   DateTime? pickedDate = null;
 
+  var phoneMask = new MaskTextInputFormatter(
+      mask: '+55(##)#####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  var cpfMask = new MaskTextInputFormatter(
+      mask: '###.###.###-##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
   //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
     _formKey.currentState?.save();
@@ -66,16 +76,6 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var phoneMask = new MaskTextInputFormatter(
-        mask: '+55(##)#####-####',
-        filter: {"#": RegExp(r'[0-9]')},
-        type: MaskAutoCompletionType.lazy);
-
-    var cpfMask = new MaskTextInputFormatter(
-        mask: '###.###.###-##',
-        filter: {"#": RegExp(r'[0-9]')},
-        type: MaskAutoCompletionType.lazy);
-
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
     return Scaffold(
       appBar: AppBar(title: Text('Editar dados Cliente'), actions: [
@@ -126,14 +126,16 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                             _formData['sobrenome'] = lastname ?? '',
                       ),
                       TextFormField(
-                        initialValue: _formData['cpf']?.toString(),
+                        initialValue:
+                            cpfMask.maskText(_formData['cpf'].toString()),
                         decoration: InputDecoration(labelText: 'CPF'),
                         onSaved: (cpf) =>
                             _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
                         inputFormatters: [cpfMask],
                       ),
                       TextFormField(
-                        initialValue: _formData['telefone']?.toString(),
+                        initialValue: phoneMask
+                            .maskText(_formData['telefone'].toString()),
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] =
                             phoneMask.getUnmaskedText() ?? '',
