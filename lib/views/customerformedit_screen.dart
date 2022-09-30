@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
@@ -65,6 +66,16 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var phoneMask = new MaskTextInputFormatter(
+        mask: '+55(##)#####-####',
+        filter: {"#": RegExp(r'[0-9]')},
+        type: MaskAutoCompletionType.lazy);
+
+    var cpfMask = new MaskTextInputFormatter(
+        mask: '###.###.###-##',
+        filter: {"#": RegExp(r'[0-9]')},
+        type: MaskAutoCompletionType.lazy);
+
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
     return Scaffold(
       appBar: AppBar(title: Text('Editar dados Cliente'), actions: [
@@ -117,12 +128,16 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                       TextFormField(
                         initialValue: _formData['cpf']?.toString(),
                         decoration: InputDecoration(labelText: 'CPF'),
-                        onSaved: (cpf) => _formData['CPF'] = cpf ?? '',
+                        onSaved: (cpf) =>
+                            _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
+                        inputFormatters: [cpfMask],
                       ),
                       TextFormField(
                         initialValue: _formData['telefone']?.toString(),
                         decoration: InputDecoration(labelText: 'Telefone'),
-                        onSaved: (phone) => _formData['telefone'] = phone ?? '',
+                        onSaved: (phone) => _formData['telefone'] =
+                            phoneMask.getUnmaskedText() ?? '',
+                        inputFormatters: [phoneMask],
                       ),
                       Padding(
                           padding: EdgeInsets.only(
