@@ -50,7 +50,7 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
         _formData['id'] = customer.id;
         _formData['nome'] = customer.nome;
         _formData['sobrenome'] = customer.sobrenome;
-        _formData['cpf'] = customer.cpf;
+        _formData['CPF'] = customer.cpf;
         _formData['telefone'] = customer.telefone;
         _formData['dataNascimento'] = customer.dataNascimento;
         pickedDate = customer.dataNascimento;
@@ -127,10 +127,10 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                       ),
                       TextFormField(
                         initialValue:
-                            cpfMask.maskText(_formData['cpf'].toString()),
+                            cpfMask.maskText(_formData['CPF'].toString()),
                         decoration: InputDecoration(labelText: 'CPF'),
-                        onSaved: (cpf) =>
-                            _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
+                        onSaved: (cpf) => _formData['CPF'] =
+                            phoneMask.unmaskText(cpf.toString()),
                         inputFormatters: [cpfMask],
                       ),
                       TextFormField(
@@ -138,7 +138,7 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                             .maskText(_formData['telefone'].toString()),
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] =
-                            phoneMask.getUnmaskedText() ?? '',
+                            phoneMask.unmaskText(phone.toString()),
                         inputFormatters: [phoneMask],
                       ),
                       Padding(
