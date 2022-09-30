@@ -28,6 +28,11 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
 
   //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) {
+      return;
+    }
+
     _formKey.currentState?.save();
 
     if (pickedDate != null) {
@@ -73,12 +78,34 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         decoration: InputDecoration(labelText: 'Nome'),
                         onSaved: (name) => _formData['nome'] = name ?? '',
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                        validator: (_name) {
+                          final name = _name ?? '';
+                          if (name.trim().isEmpty) {
+                            return 'Nome e obrigatorio';
+                          }
+                          if (name.trim().length < 3) {
+                            return 'Min 3 caracteres';
+                          }
+                          return null;
+                        },
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Sobrenome'),
                         onSaved: (lastname) =>
                             _formData['sobrenome'] = lastname ?? '',
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                        validator: (_lastName) {
+                          final lastName = _lastName ?? '';
+                          if (lastName.trim().isEmpty) {
+                            return 'Nome e obrigatorio';
+                          }
+                          if (lastName.trim().length < 3) {
+                            return 'Min 3 caracteres';
+                          }
+                          return null;
+                        },
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Telefone'),
@@ -86,13 +113,33 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                             phoneMask.getUnmaskedText() ?? '',
                         keyboardType: TextInputType.phone,
                         inputFormatters: [phoneMask],
+                        textInputAction: TextInputAction.next,
+                        validator: (_phone) {
+                          final phone = _phone ?? '';
+                          if (phone.isNotEmpty) {
+                            if (phoneMask.unmaskText(phone).length < 11) {
+                              return 'Celulares possuem o DDD e mais 9 digitos';
+                            }
+                            return null;
+                          }
+                        },
                       ),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'CPF'),
                         onSaved: (cpf) =>
                             _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
                         keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
                         inputFormatters: [cpfMask],
+                        validator: (_cpf) {
+                          final cpf = _cpf ?? '';
+                          if (cpf.isNotEmpty) {
+                            if (cpfMask.unmaskText(cpf).length < 11) {
+                              return 'CPF: possuem 11 digitos';
+                            }
+                            return null;
+                          }
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
