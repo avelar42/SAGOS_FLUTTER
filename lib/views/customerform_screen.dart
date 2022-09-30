@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomerFormScreen extends StatefulWidget {
   const CustomerFormScreen({Key? key}) : super(key: key);
@@ -14,6 +15,16 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   DateTime? pickedDate = null;
+
+  var phoneMask = new MaskTextInputFormatter(
+      mask: '+55(##)#####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  var cpfMask = new MaskTextInputFormatter(
+      mask: '###.###.###-##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
@@ -70,14 +81,18 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         textInputAction: TextInputAction.next,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'CPF'),
-                        onSaved: (cpf) => _formData['CPF'] = cpf ?? '',
-                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(labelText: 'Telefone'),
+                        onSaved: (phone) => _formData['telefone'] =
+                            phoneMask.getUnmaskedText() ?? '',
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [phoneMask],
                       ),
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'Telefone'),
-                        onSaved: (phone) => _formData['telefone'] = phone ?? '',
-                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(labelText: 'CPF'),
+                        onSaved: (cpf) =>
+                            _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [cpfMask],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(

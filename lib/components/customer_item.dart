@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import '../utils/app_routes.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomerItem extends StatelessWidget {
   const CustomerItem(this.customer, {Key? key}) : super(key: key);
@@ -11,10 +12,15 @@ class CustomerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var phoneMask = new MaskTextInputFormatter(
+        mask: '+55(##)#####-####',
+        filter: {"#": RegExp(r'[0-9]')},
+        type: MaskAutoCompletionType.lazy);
+
     return ListTile(
       title: Text('${customer.nome} ${customer.sobrenome}'),
       subtitle: Text(
-        customer.telefone,
+        phoneMask.maskText(customer.telefone),
         style: TextStyle(color: Colors.grey),
       ),
       trailing: Container(
