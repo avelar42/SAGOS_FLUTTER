@@ -126,21 +126,22 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                             _formData['sobrenome'] = lastname ?? '',
                       ),
                       TextFormField(
-                        initialValue:
-                            cpfMask.maskText(_formData['CPF'].toString()),
-                        decoration: InputDecoration(labelText: 'CPF'),
-                        onSaved: (cpf) => _formData['CPF'] =
-                            phoneMask.unmaskText(cpf.toString()),
-                        inputFormatters: [cpfMask],
-                      ),
-                      TextFormField(
                         initialValue: phoneMask
                             .maskText(_formData['telefone'].toString()),
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] =
                             phoneMask.unmaskText(phone.toString()),
                         inputFormatters: [phoneMask],
+                        keyboardType: TextInputType.phone,
                       ),
+                      TextFormField(
+                          initialValue:
+                              cpfMask.maskText(_formData['CPF'].toString()),
+                          decoration: InputDecoration(labelText: 'CPF'),
+                          onSaved: (cpf) => _formData['CPF'] =
+                              phoneMask.unmaskText(cpf.toString()),
+                          inputFormatters: [cpfMask],
+                          keyboardType: TextInputType.number),
                       Padding(
                           padding: EdgeInsets.only(
                               right: 0, left: 0, top: 10, bottom: 10)),
