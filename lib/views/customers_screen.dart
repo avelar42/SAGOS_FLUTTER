@@ -21,6 +21,11 @@ class _CustomersScreenState extends State<CustomersScreen> {
     Provider.of<CustomerViewModel>(context, listen: false).getCustomers();
   }
 
+  Future<void> _refreshCustomers(BuildContext context) {
+    return Provider.of<CustomerViewModel>(context, listen: false)
+        .getCustomers();
+  }
+
   @override
   Widget build(BuildContext context) {
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
@@ -33,15 +38,18 @@ class _CustomersScreenState extends State<CustomersScreen> {
               icon: Icon(Icons.add))
         ]),
         drawer: AppDrawer(),
-        body: customerViewModel.loading
-            ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                itemBuilder: (ctx, i) => Column(
-                      children: [
-                        CustomerItem(customerViewModel.customerListModel[i]),
-                        Divider()
-                      ],
-                    ),
-                itemCount: customerViewModel.getItensCount()));
+        body: RefreshIndicator(
+            child: customerViewModel.loading
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemBuilder: (ctx, i) => Column(
+                          children: [
+                            CustomerItem(
+                                customerViewModel.customerListModel[i]),
+                            Divider()
+                          ],
+                        ),
+                    itemCount: customerViewModel.getItensCount()),
+            onRefresh: () => _refreshCustomers(context)));
   }
 }
