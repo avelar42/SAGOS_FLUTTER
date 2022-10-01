@@ -25,7 +25,9 @@ class CustomerViewModel extends ChangeNotifier {
           sobrenome: customerValue['sobrenome'],
           telefone: customerValue['telefone'],
           cpf: customerValue['CPF'],
-          dataNascimento: DateTime.parse(customerValue['dataNascimento'])));
+          dataNascimento: customerValue['dataNascimento'] != ''
+              ? DateTime.parse(customerValue['dataNascimento'])
+              : null));
     });
   }
 
@@ -88,9 +90,11 @@ class CustomerViewModel extends ChangeNotifier {
         id: '',
         nome: data['nome'] as String,
         sobrenome: data['sobrenome'] as String,
-        cpf: data['CPF'] as String,
-        telefone: data['telefone'] as String,
-        dataNascimento: DateTime.parse(data['dataNascimento'].toString()));
+        cpf: data['CPF'] != null ? data['CPF'].toString() : '',
+        telefone: data['telefone'] != null ? data['telefone'].toString() : '',
+        dataNascimento: data['dataNascimento'] != null
+            ? DateTime.parse(data['dataNascimento'].toString())
+            : null);
     return customer;
   }
 

@@ -27,7 +27,6 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
-  //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) {
@@ -55,9 +54,11 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
         _formData['id'] = customer.id;
         _formData['nome'] = customer.nome;
         _formData['sobrenome'] = customer.sobrenome;
-        _formData['CPF'] = customer.cpf;
-        _formData['telefone'] = customer.telefone;
-        _formData['dataNascimento'] = customer.dataNascimento;
+        _formData['CPF'] = customer.cpf.toString();
+        _formData['telefone'] = customer.telefone.toString();
+        _formData['dataNascimento'] = customer.dataNascimento != null
+            ? customer.dataNascimento.toString()
+            : '';
         pickedDate = customer.dataNascimento;
       }
     }
@@ -193,7 +194,7 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                       Container(
                         child: Row(
                           children: [
-                            Text(_formData['dataNascimento'] == null
+                            Text(_formData['dataNascimento'] == ''
                                 ? 'Insira uma data'
                                 : DateFormat('d/M/y').format(DateTime.parse(
                                     _formData['dataNascimento'].toString()))),

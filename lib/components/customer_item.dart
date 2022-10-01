@@ -20,7 +20,7 @@ class CustomerItem extends StatelessWidget {
     return ListTile(
       title: Text('${customer.nome} ${customer.sobrenome}'),
       subtitle: Text(
-        phoneMask.maskText(customer.telefone),
+        phoneMask.maskText(customer.telefone as String),
         style: TextStyle(color: Colors.grey),
       ),
       trailing: Container(
