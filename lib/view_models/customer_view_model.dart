@@ -105,7 +105,9 @@ class CustomerViewModel extends ChangeNotifier {
         sobrenome: data['sobrenome'] as String,
         cpf: data['CPF'] as String,
         telefone: data['telefone'] as String,
-        dataNascimento: DateTime.parse(data['dataNascimento'].toString()));
+        dataNascimento: data['dataNascimento'] != ""
+            ? DateTime.parse(data['dataNascimento'].toString())
+            : null);
     return customer;
   }
 }
