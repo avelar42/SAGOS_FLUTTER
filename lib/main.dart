@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sagos_mobile/utils/app_routes.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
+import 'package:sagos_mobile/views/address_screen.dart';
+import 'package:sagos_mobile/views/asset_screen.dart';
 import 'package:sagos_mobile/views/customerform_screen.dart';
 import 'package:sagos_mobile/views/customerformedit_screen.dart';
 import 'package:sagos_mobile/views/customers_screen.dart';
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
             AppRoutes.HOME: (context) => DashBoardScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),
             AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen(),
-            AppRoutes.CUSTOMER_FORM_EDIT: (context) => CustomerFormEditScreen()
+            AppRoutes.CUSTOMER_FORM_EDIT: (context) => CustomerFormEditScreen(),
+            AppRoutes.CUSTOMER_ASSETS: (context) => AssetsScreen(),
+            AppRoutes.CUSTOMER_ADDRESS: (context) => AddressScreen()
           },
           debugShowCheckedModeBanner: false,
         ));

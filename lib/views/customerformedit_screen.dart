@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sagos_mobile/model/customer.dart';
+import 'package:sagos_mobile/utils/app_routes.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +106,11 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                                 height: 30,
                                 width: 60,
                                 child: TextButton(
-                                    onPressed: () {}, child: Text('Ativos'))),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushNamed(AppRoutes.CUSTOMER_ASSETS);
+                                    },
+                                    child: Text('Ativos'))),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -114,7 +119,9 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                               height: 30,
                               width: 90,
                               child: TextButton(
-                                  onPressed: () {}, child: Text('Enderecos')),
+                                  onPressed: () => Navigator.of(context)
+                                      .pushNamed(AppRoutes.CUSTOMER_ADDRESS),
+                                  child: Text('Endereços')),
                             ),
                           )
                         ],

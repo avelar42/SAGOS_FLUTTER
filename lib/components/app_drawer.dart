@@ -29,6 +29,14 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.person),
           onTap: () =>
               Navigator.of(context).pushReplacementNamed(AppRoutes.CUSTOMERS),
+        ),
+        Container(
+          child: ListTile(
+            title: Text('Sair'),
+            leading: Icon(Icons.arrow_back),
+            onTap: () =>
+                Navigator.of(context).pushReplacementNamed(AppRoutes.CUSTOMERS),
+          ),
         )
       ]),
     );
