@@ -107,8 +107,13 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                                 width: 60,
                                 child: TextButton(
                                     onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(AppRoutes.CUSTOMER_ASSETS);
+                                      Navigator.of(context).pushNamed(
+                                          AppRoutes.CUSTOMER_ASSETS,
+                                          arguments: [
+                                            ModalRoute.of(context)
+                                                ?.settings
+                                                .arguments as Customer
+                                          ]);
                                     },
                                     child: Text('Ativos'))),
                           ),
@@ -120,7 +125,8 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                               width: 90,
                               child: TextButton(
                                   onPressed: () => Navigator.of(context)
-                                      .pushNamed(AppRoutes.CUSTOMER_ADDRESS),
+                                      .pushNamed(AppRoutes.CUSTOMER_ADDRESS,
+                                          arguments: [_formData]),
                                   child: Text('Endereços')),
                             ),
                           )
