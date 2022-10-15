@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sagos_mobile/model/asset.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
 import 'package:sagos_mobile/service/customer_service.dart';
@@ -19,14 +20,25 @@ class CustomerViewModel extends ChangeNotifier {
 
   setCustomerListModel(Map<String, dynamic> customerListModel) {
     customerListModel.forEach((customerId, customerValue) {
+      if (customerValue['dataNascimento'] == '') {
+        customerValue['dataNascimento'] = null;
+      }
       _customerListModel.add(Customer(
           id: customerId,
           nome: customerValue['nome'],
           sobrenome: customerValue['sobrenome'],
           telefone: customerValue['telefone'],
           cpf: customerValue['CPF'],
-          dataNascimento: customerValue['dataNascimento'] != ''
+          dataNascimento: customerValue['dataNascimento'] != null
               ? DateTime.parse(customerValue['dataNascimento'])
+              : null,
+          assets: customerValue['assets'] != null
+              ? (customerValue['assets'] as List<dynamic>).map((asset) {
+                  return Asset(
+                      id: asset['id'],
+                      descricao: asset['descricao'],
+                      codigo: asset['codigo']);
+                }).toList()
               : null));
     });
   }
@@ -58,13 +70,14 @@ class CustomerViewModel extends ChangeNotifier {
 
   saveAsset(Map<String, Object> data) async {
     //await setLoading(true);
-
-    //GET ASSET
     var index =
         _customerListModel.indexWhere((c) => c.id == data['customerId']);
-    print(index);
-
-    //SET ASSET
+    var customer = _customerListModel[index];
+    var asset = AssetMapToObject(data);
+    customer.assets = <Asset>[];
+    customer.assets?.add(asset);
+    var response = await CustomerService.saveCustomerService(customer);
+    print(customer.assets);
   }
 
   Future<void> removeCustomer(Customer customer) async {
@@ -120,5 +133,14 @@ class CustomerViewModel extends ChangeNotifier {
             ? DateTime.parse(data['dataNascimento'].toString())
             : null);
     return customer;
+  }
+
+  Asset AssetMapToObject(Map<String, Object> data) {
+    final asset = Asset(
+        id: '',
+        descricao: data['descricao'] as String,
+        codigo: data['codigo'] as String,
+        identificacao: data['identificacao'] as String);
+    return asset;
   }
 }

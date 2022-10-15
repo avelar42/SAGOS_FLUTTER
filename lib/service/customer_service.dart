@@ -52,7 +52,15 @@ class CustomerService {
               "sobrenome": customerData.sobrenome,
               "CPF": customerData.cpf,
               "telefone": customerData.telefone,
-              "dataNascimento": customerData.dataNascimento?.toIso8601String()
+              "dataNascimento": customerData.dataNascimento?.toIso8601String(),
+              "assets": customerData.assets
+                  ?.map((asset) => {
+                        'id': customerData.assets?.length.toString(),
+                        'codigo': asset.codigo,
+                        'descricao': asset.descricao,
+                        'identificacao': asset.identificacao
+                      })
+                  .toList()
             }));
         final id = jsonDecode(response.body)['name'];
         return id;
