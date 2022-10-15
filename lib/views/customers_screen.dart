@@ -31,25 +31,26 @@ class _CustomersScreenState extends State<CustomersScreen> {
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
 
     return Scaffold(
-        appBar: AppBar(title: Text('Clientes'), actions: [
-          IconButton(
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_FORM),
-              icon: Icon(Icons.add))
-        ]),
-        drawer: AppDrawer(),
-        body: RefreshIndicator(
-            child: customerViewModel.loading
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemBuilder: (ctx, i) => Column(
-                          children: [
-                            CustomerItem(
-                                customerViewModel.customerListModel[i]),
-                            Divider()
-                          ],
-                        ),
-                    itemCount: customerViewModel.getItensCount()),
-            onRefresh: () => _refreshCustomers(context)));
+      appBar: AppBar(title: Text('Clientes'), actions: [
+        IconButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_FORM),
+            icon: Icon(Icons.add))
+      ]),
+      drawer: AppDrawer(),
+      body: RefreshIndicator(
+          child: customerViewModel.loading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemBuilder: (ctx, i) => Column(
+                        children: [
+                          CustomerItem(customerViewModel.customerListModel[i]),
+                          Padding(padding: EdgeInsets.all(3))
+                        ],
+                      ),
+                  itemCount: customerViewModel.getItensCount()),
+          onRefresh: () => _refreshCustomers(context)),
+      backgroundColor: Theme.of(context).backgroundColor,
+    );
   }
 }

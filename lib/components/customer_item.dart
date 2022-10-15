@@ -18,6 +18,7 @@ class CustomerItem extends StatelessWidget {
         type: MaskAutoCompletionType.lazy);
 
     return ListTile(
+      tileColor: Colors.white,
       title: Text('${customer.nome} ${customer.sobrenome}'),
       subtitle: Text(
         phoneMask.maskText(customer.telefone as String),

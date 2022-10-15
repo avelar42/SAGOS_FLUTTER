@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.indigo,
               brightness: Brightness.light,
-              fontFamily: 'Lato'),
+              fontFamily: 'Lato',
+              backgroundColor: Colors.grey[200]),
           routes: {
             AppRoutes.HOME: (context) => DashBoardScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),

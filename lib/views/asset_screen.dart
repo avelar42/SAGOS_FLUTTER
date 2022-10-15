@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sagos_mobile/components/asset_item.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/utils/app_routes.dart';
+
+import '../view_models/customer_view_model.dart';
 
 class AssetsScreen extends StatefulWidget {
   const AssetsScreen({Key? key}) : super(key: key);
@@ -26,6 +30,9 @@ class _AssetsScreenState extends State<AssetsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
+    final Customer customer = customerViewModel.getCustomer(_customerId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Ativos'),
@@ -40,7 +47,12 @@ class _AssetsScreenState extends State<AssetsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Form(child: Text('form')),
+        child: ListView.builder(
+          itemBuilder: (context, index) => Column(
+            children: [AssetItem(customer.assets![index])],
+          ),
+          itemCount: customer.assets!.length,
+        ),
       ),
     );
   }

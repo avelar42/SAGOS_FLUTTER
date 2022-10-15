@@ -143,4 +143,9 @@ class CustomerViewModel extends ChangeNotifier {
         identificacao: data['identificacao'] as String);
     return asset;
   }
+
+  Customer getCustomer(String customerId) {
+    var index = _customerListModel.indexWhere((c) => c.id == customerId);
+    return _customerListModel[index];
+  }
 }
