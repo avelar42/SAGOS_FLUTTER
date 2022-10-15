@@ -10,6 +10,7 @@ class AssetsScreen extends StatefulWidget {
 }
 
 class _AssetsScreenState extends State<AssetsScreen> {
+  String _customerId = "";
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -17,8 +18,9 @@ class _AssetsScreenState extends State<AssetsScreen> {
 
     final arg = ModalRoute.of(context)?.settings.arguments as List<Customer>;
     if (arg.length > 0) {
-      print(arg.length);
-      print(arg[0].nome);
+      //print(arg.length);
+      //print(arg[0].nome);
+      _customerId = arg[0].id;
     }
   }
 
@@ -30,7 +32,8 @@ class _AssetsScreenState extends State<AssetsScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM);
+                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM,
+                    arguments: [_customerId]);
               },
               icon: Icon(Icons.add))
         ],

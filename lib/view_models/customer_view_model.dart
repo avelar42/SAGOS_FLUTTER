@@ -56,6 +56,17 @@ class CustomerViewModel extends ChangeNotifier {
     await setLoading(false);
   }
 
+  saveAsset(Map<String, Object> data) async {
+    //await setLoading(true);
+
+    //GET ASSET
+    var index =
+        _customerListModel.indexWhere((c) => c.id == data['customerId']);
+    print(index);
+
+    //SET ASSET
+  }
+
   Future<void> removeCustomer(Customer customer) async {
     var index = _customerListModel.indexWhere((c) => c.id == customer.id);
     if (index >= 0) {
