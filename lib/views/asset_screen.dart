@@ -49,9 +49,13 @@ class _AssetsScreenState extends State<AssetsScreen> {
         padding: const EdgeInsets.all(10),
         child: ListView.builder(
           itemBuilder: (context, index) => Column(
-            children: [AssetItem(customer.assets![index])],
+            children: [
+              customer.assets != null
+                  ? AssetItem(customer.assets![index])
+                  : Text('Nao possui dados')
+            ],
           ),
-          itemCount: customer.assets!.length,
+          itemCount: customer.assets != null ? customer.assets!.length : 0,
         ),
       ),
     );

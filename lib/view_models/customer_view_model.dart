@@ -69,15 +69,16 @@ class CustomerViewModel extends ChangeNotifier {
   }
 
   saveAsset(Map<String, Object> data) async {
-    //await setLoading(true);
+    await setLoading(true);
     var index =
         _customerListModel.indexWhere((c) => c.id == data['customerId']);
     var customer = _customerListModel[index];
-    var asset = AssetMapToObject(data);
-    customer.assets = <Asset>[];
+    var assetLenght = customer.assets?.length;
+    var asset = AssetMapToObject(data, assetLenght ?? 0);
+    customer.assets ?? (customer.assets = <Asset>[]);
     customer.assets?.add(asset);
     var response = await CustomerService.saveCustomerService(customer);
-    print(customer.assets);
+    await setLoading(false);
   }
 
   Future<void> removeCustomer(Customer customer) async {
@@ -135,9 +136,9 @@ class CustomerViewModel extends ChangeNotifier {
     return customer;
   }
 
-  Asset AssetMapToObject(Map<String, Object> data) {
+  Asset AssetMapToObject(Map<String, Object> data, int? assetLenght) {
     final asset = Asset(
-        id: '',
+        id: assetLenght.toString(),
         descricao: data['descricao'] as String,
         codigo: data['codigo'] as String,
         identificacao: data['identificacao'] as String);
