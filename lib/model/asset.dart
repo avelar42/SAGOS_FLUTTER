@@ -5,8 +5,8 @@ class Asset {
       required this.codigo,
       this.identificacao});
 
-  final String id;
-  final String codigo;
-  final String descricao;
-  final String? identificacao;
+  String id;
+  String codigo;
+  String descricao;
+  String? identificacao;
 }

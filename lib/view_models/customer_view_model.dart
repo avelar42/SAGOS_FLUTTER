@@ -3,6 +3,7 @@ import 'package:sagos_mobile/model/asset.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
 import 'package:sagos_mobile/service/customer_service.dart';
+import 'package:uuid/uuid.dart';
 
 class CustomerViewModel extends ChangeNotifier {
   bool _loading = false;
@@ -70,14 +71,28 @@ class CustomerViewModel extends ChangeNotifier {
 
   saveAsset(Map<String, Object> data) async {
     await setLoading(true);
-    var index =
+    var customerIndex =
         _customerListModel.indexWhere((c) => c.id == data['customerId']);
-    var customer = _customerListModel[index];
-    var assetLenght = customer.assets?.length;
-    var asset = AssetMapToObject(data, assetLenght ?? 0);
-    customer.assets ?? (customer.assets = <Asset>[]);
-    customer.assets?.add(asset);
-    var response = await CustomerService.saveCustomerService(customer);
+    var customer = _customerListModel[customerIndex];
+    if (customer != null) {
+      var asset = AssetMapToObject(data);
+      customer.assets ?? (customer.assets = <Asset>[]);
+      var assetIndex =
+          customer.assets?.indexWhere((a) => a.id == data['id'].toString());
+      if (assetIndex! >= 0) {
+        var asset = customer.assets![assetIndex] as Asset;
+        asset.id = data['id'].toString();
+        asset.codigo = data['codigo'].toString();
+        asset.descricao = data['descricao'].toString();
+        asset.identificacao = data['identificacao'].toString();
+
+        customer.assets![assetIndex] = asset;
+      } else {
+        customer.assets?.add(asset);
+      }
+      var response = await CustomerService.saveCustomerService(customer);
+    }
+
     await setLoading(false);
   }
 
@@ -136,9 +151,9 @@ class CustomerViewModel extends ChangeNotifier {
     return customer;
   }
 
-  Asset AssetMapToObject(Map<String, Object> data, int? assetLenght) {
+  Asset AssetMapToObject(Map<String, Object> data) {
     final asset = Asset(
-        id: assetLenght.toString(),
+        id: data['id'] != "" ? data['id'].toString() : Uuid().v1().toString(),
         descricao: data['descricao'] as String,
         codigo: data['codigo'] as String,
         identificacao: data['identificacao'] as String);

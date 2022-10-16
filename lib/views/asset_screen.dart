@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sagos_mobile/components/asset_item.dart';
+import 'package:sagos_mobile/model/asset.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/utils/app_routes.dart';
 
@@ -40,7 +41,10 @@ class _AssetsScreenState extends State<AssetsScreen> {
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM,
-                    arguments: [_customerId]);
+                    arguments: [
+                      Asset(id: '', descricao: '', codigo: ''),
+                      _customerId
+                    ]);
               },
               icon: Icon(Icons.add))
         ],
@@ -51,7 +55,7 @@ class _AssetsScreenState extends State<AssetsScreen> {
           itemBuilder: (context, index) => Column(
             children: [
               customer.assets != null
-                  ? AssetItem(customer.assets![index])
+                  ? AssetItem(customer.assets![index], customer.id)
                   : Text('Nao possui dados')
             ],
           ),

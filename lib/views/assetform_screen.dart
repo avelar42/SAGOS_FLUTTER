@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../model/customer.dart';
+import 'package:sagos_mobile/model/asset.dart';
 import '../view_models/customer_view_model.dart';
 
 class AssetFormScreen extends StatefulWidget {
@@ -33,12 +32,19 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    final arg = ModalRoute.of(context)?.settings.arguments as List<String>;
+    final arg = ModalRoute.of(context)?.settings.arguments as List<Object>;
 
     if (arg.length > 0) {
-      _formData['customerId'] = arg[0];
+      var asset = arg[0] as Asset?;
+      _formData['customerId'] = arg[1].toString();
+      if (asset != null) {
+        _formData['id'] = asset.id.toString();
+        _formData['codigo'] = asset.codigo.toString();
+        _formData['descricao'] = asset.descricao.toString();
+        _formData['identificacao'] = asset.identificacao.toString();
+      }
     }
-    print(_formData);
+    print(arg);
   }
 
   @override
@@ -55,12 +61,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             child: ListView(
               children: [
                 TextFormField(
+                  initialValue: _formData['codigo']?.toString(),
                   decoration: InputDecoration(label: Text('Código')),
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   onSaved: (codigo) => _formData['codigo'] = codigo ?? "",
                 ),
                 TextFormField(
+                  initialValue: _formData['descricao']?.toString(),
                   decoration: InputDecoration(label: Text('Descrição')),
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
@@ -68,6 +76,7 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                       _formData['descricao'] = descricao ?? "",
                 ),
                 TextFormField(
+                  initialValue: _formData['identificacao']?.toString(),
                   decoration: InputDecoration(label: Text('Identificação')),
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,

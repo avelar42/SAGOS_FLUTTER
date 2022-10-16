@@ -55,7 +55,7 @@ class CustomerService {
               "dataNascimento": customerData.dataNascimento?.toIso8601String(),
               "assets": customerData.assets
                   ?.map((asset) => {
-                        'id': customerData.assets?.length.toString(),
+                        'id': asset.id,
                         'codigo': asset.codigo,
                         'descricao': asset.descricao,
                         'identificacao': asset.identificacao
