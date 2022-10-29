@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:sagos_mobile/model/address.dart';
 import 'package:sagos_mobile/model/asset.dart';
@@ -42,6 +40,17 @@ class CustomerViewModel extends ChangeNotifier {
                       id: asset['id'],
                       descricao: asset['descricao'],
                       codigo: asset['codigo']);
+                }).toList()
+              : null,
+          address: customerValue['address'] != null
+              ? (customerValue['address'] as List<dynamic>).map((address) {
+                  return Address(
+                      id: address['id'],
+                      rua: address['rua'],
+                      numero: 180,
+                      cep: address['cep'],
+                      bairro: address['bairro'],
+                      cidade: address['cidade']);
                 }).toList()
               : null));
     });
