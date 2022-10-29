@@ -60,6 +60,16 @@ class CustomerService {
                         'descricao': asset.descricao,
                         'identificacao': asset.identificacao
                       })
+                  .toList(),
+              "address": customerData.address
+                  ?.map((address) => {
+                        'id': address.id,
+                        'cep': address.cep,
+                        'rua': address.rua,
+                        'numero': address.rua,
+                        'bairro': address.bairro,
+                        'cidade': address.cidade
+                      })
                   .toList()
             }));
         final id = jsonDecode(response.body)['name'];

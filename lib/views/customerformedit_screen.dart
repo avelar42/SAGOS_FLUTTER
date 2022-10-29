@@ -126,7 +126,9 @@ class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
                               child: TextButton(
                                   onPressed: () => Navigator.of(context)
                                       .pushNamed(AppRoutes.CUSTOMER_ADDRESS,
-                                          arguments: [_formData]),
+                                          arguments: ModalRoute.of(context)
+                                              ?.settings
+                                              .arguments as Customer),
                                   child: Text('Endereços')),
                             ),
                           )

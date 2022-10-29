@@ -1,3 +1,4 @@
+import 'package:sagos_mobile/model/address.dart';
 import 'package:sagos_mobile/model/asset.dart';
 
 class Customer {
@@ -8,7 +9,8 @@ class Customer {
       this.telefone,
       this.cpf,
       this.dataNascimento,
-      this.assets});
+      this.assets,
+      this.address});
   String id;
   String nome;
   String sobrenome;
@@ -16,4 +18,5 @@ class Customer {
   String? cpf;
   DateTime? dataNascimento;
   List<Asset>? assets;
+  List<Address>? address;
 }

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:sagos_mobile/model/address.dart';
 import 'package:sagos_mobile/model/asset.dart';
 import 'package:sagos_mobile/model/customer.dart';
 import 'package:sagos_mobile/service/api_status.dart';
@@ -92,7 +95,34 @@ class CustomerViewModel extends ChangeNotifier {
       }
       var response = await CustomerService.saveCustomerService(customer);
     }
+    await setLoading(false);
+  }
 
+  saveAddress(Map<String, Object> data) async {
+    await setLoading(true);
+    var customerIndex =
+        _customerListModel.indexWhere((c) => c.id == data['customerId']);
+    var customer = _customerListModel[customerIndex];
+    if (customer != null) {
+      var address = AddressMapToObject(data);
+      customer.address ?? (customer.address = <Address>[]);
+      var addressIndex =
+          customer.address?.indexWhere((a) => a.id == data['id'].toString());
+      if (addressIndex! >= 0) {
+        var address = customer.address![addressIndex] as Address;
+        address.id = data['id'].toString();
+        address.cep = data['cep'].toString();
+        address.rua = data['rua'].toString();
+        address.numero = int.parse(data['rua'].toString());
+        address.bairro = data['bairro'].toString();
+        address.cidade = data['cidade'].toString();
+
+        customer.address![addressIndex] = address;
+      } else {
+        customer.address?.add(address);
+      }
+      var response = await CustomerService.saveCustomerService(customer);
+    }
     await setLoading(false);
   }
 
@@ -170,6 +200,17 @@ class CustomerViewModel extends ChangeNotifier {
         codigo: data['codigo'] as String,
         identificacao: data['identificacao'] as String);
     return asset;
+  }
+
+  Address AddressMapToObject(Map<String, Object> data) {
+    final address = Address(
+        id: data['id'] != "" ? data['id'].toString() : Uuid().v1().toString(),
+        rua: data['rua'].toString(),
+        numero: int.parse(data['numero'].toString()),
+        bairro: data['bairro'].toString(),
+        cep: data['cep'].toString(),
+        cidade: data['cidade'].toString());
+    return address;
   }
 
   Customer getCustomer(String customerId) {
