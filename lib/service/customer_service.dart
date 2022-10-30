@@ -66,7 +66,7 @@ class CustomerService {
                         'id': address.id,
                         'cep': address.cep,
                         'rua': address.rua,
-                        'numero': address.rua,
+                        'numero': address.numero,
                         'bairro': address.bairro,
                         'cidade': address.cidade
                       })

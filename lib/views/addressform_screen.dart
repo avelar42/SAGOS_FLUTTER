@@ -63,7 +63,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     decoration: InputDecoration(label: Text('CEP')),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
-                    onSaved: (cep) => _formData['CEP'] = cep.toString(),
+                    onSaved: (cep) => _formData['cep'] = cep.toString(),
                   ),
                   TextFormField(
                     decoration: InputDecoration(label: Text('Rua')),

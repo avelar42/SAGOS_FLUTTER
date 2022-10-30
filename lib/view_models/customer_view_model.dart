@@ -122,7 +122,7 @@ class CustomerViewModel extends ChangeNotifier {
         address.id = data['id'].toString();
         address.cep = data['cep'].toString();
         address.rua = data['rua'].toString();
-        address.numero = int.parse(data['rua'].toString());
+        address.numero = int.parse(data['numero'].toString());
         address.bairro = data['bairro'].toString();
         address.cidade = data['cidade'].toString();
 
