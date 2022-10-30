@@ -60,18 +60,21 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                 children: [
                   //Text('Codigo: 1'),
                   TextFormField(
+                    initialValue: _formData['cep']?.toString(),
                     decoration: InputDecoration(label: Text('CEP')),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     onSaved: (cep) => _formData['cep'] = cep.toString(),
                   ),
                   TextFormField(
+                    initialValue: _formData['rua']?.toString(),
                     decoration: InputDecoration(label: Text('Rua')),
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.next,
                     onSaved: (rua) => _formData['rua'] = rua.toString(),
                   ),
                   TextFormField(
+                    initialValue: _formData['numero']?.toString(),
                     decoration: InputDecoration(label: Text('Numero')),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
@@ -79,6 +82,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                         _formData['numero'] = numero.toString(),
                   ),
                   TextFormField(
+                    initialValue: _formData['bairro']?.toString(),
                     decoration: InputDecoration(label: Text('Bairro')),
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.next,
@@ -86,6 +90,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                         _formData['bairro'] = bairro.toString(),
                   ),
                   TextFormField(
+                    initialValue: _formData['cidade']?.toString(),
                     decoration: InputDecoration(label: Text('Cidade')),
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,

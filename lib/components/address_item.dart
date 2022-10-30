@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sagos_mobile/model/address.dart';
+import 'package:sagos_mobile/utils/app_routes.dart';
 
 class AddressItem extends StatelessWidget {
   const AddressItem(this.address, this.customerId, {Key? key})
@@ -18,7 +19,10 @@ class AddressItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM,
+                    arguments: [address, customerId]);
+              },
               icon: Icon(Icons.edit),
               color: Colors.blue,
             ),
@@ -27,7 +31,11 @@ class AddressItem extends StatelessWidget {
               icon: Icon(Icons.delete),
               color: Colors.red,
             ),
-            IconButton(onPressed: () {}, icon: Icon(Icons.check_circle))
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.check_circle),
+              color: Colors.green,
+            )
           ],
         ),
       ),
