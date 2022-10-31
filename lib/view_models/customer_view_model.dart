@@ -161,6 +161,18 @@ class CustomerViewModel extends ChangeNotifier {
     setLoading(false);
   }
 
+  Future<void> removeAddress(Address address, String customerid) async {
+    setLoading(true);
+    var index = _customerListModel.indexWhere((c) => c.id == customerid);
+    var costumer = _customerListModel[index];
+    if (costumer != null) {
+      costumer.address!.remove(address);
+      var response = await CustomerService.saveCustomerService(costumer);
+      costumer.address!.remove(address);
+    }
+    setLoading(false);
+  }
+
   updateCustomer(Map<String, Object> data) async {
     final customer = CustomerMapToObjectWithId(data);
     var index = _customerListModel.indexWhere((c) => c.id == customer.id);
