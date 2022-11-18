@@ -6,6 +6,7 @@ import 'package:sagos_mobile/views/address_screen.dart';
 import 'package:sagos_mobile/views/addressform_screen.dart';
 import 'package:sagos_mobile/views/asset_screen.dart';
 import 'package:sagos_mobile/views/assetform_screen.dart';
+import 'package:sagos_mobile/views/auth_page.dart';
 import 'package:sagos_mobile/views/customerform_screen.dart';
 import 'package:sagos_mobile/views/customerformedit_screen.dart';
 import 'package:sagos_mobile/views/customers_screen.dart';
@@ -36,10 +37,12 @@ class MyApp extends StatelessWidget {
               // Notice that the counter didn't reset back to zero; the application
               // is not restarted.
               primarySwatch: Colors.indigo,
+              accentColor: Colors.deepOrangeAccent,
               brightness: Brightness.light,
               fontFamily: 'Lato',
               backgroundColor: Colors.grey[200]),
           routes: {
+            AppRoutes.AUTH: (context) => AuthPage(),
             AppRoutes.HOME: (context) => DashBoardScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),
             AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen(),
