@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sagos_mobile/utils/app_routes.dart';
+import 'package:sagos_mobile/view_models/auth_view_model.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:sagos_mobile/views/address_screen.dart';
 import 'package:sagos_mobile/views/addressform_screen.dart';
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => CustomerViewModel())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => CustomerViewModel()),
+          ChangeNotifierProvider(create: (_) => AuthViewModel())
+        ],
         child: MaterialApp(
           title: 'SAGOS',
           theme: ThemeData(
