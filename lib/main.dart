@@ -26,8 +26,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => CustomerViewModel()),
-          ChangeNotifierProvider(create: (_) => AuthViewModel())
+          ChangeNotifierProvider(create: (_) => AuthViewModel()),
+          ChangeNotifierProxyProvider<AuthViewModel, CustomerViewModel>(
+            create: (_) => CustomerViewModel('', []),
+            update: (ctx, auth, previous) {
+              return CustomerViewModel(
+                  auth.token ?? '', previous?.customerListModel ?? []);
+            },
+          )
         ],
         child: MaterialApp(
           title: 'SAGOS',

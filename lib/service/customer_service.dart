@@ -6,9 +6,10 @@ import 'package:sagos_mobile/service/api_status.dart';
 import '../utils/constants.dart';
 
 class CustomerService {
-  static Future<Object> getCustomers() async {
+  static Future<Object> getCustomers(String? token) async {
     try {
-      var url = Uri.parse('${URL_BASE_CUSTOMERS}.json');
+      // print(token);
+      var url = Uri.parse('${URL_BASE_CUSTOMERS}.json?auth=$token');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);

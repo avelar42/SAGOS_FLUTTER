@@ -12,6 +12,10 @@ class AuthViewModel extends ChangeNotifier {
     return _auth.isAuth;
   }
 
+  String? get token {
+    return _auth.token;
+  }
+
   Future<void> autenticate(String email, String password) async {
     final response = await post(Uri.parse(URL_LOGIN),
         body: jsonEncode(

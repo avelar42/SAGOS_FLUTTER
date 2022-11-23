@@ -7,8 +7,11 @@ import 'package:sagos_mobile/service/customer_service.dart';
 import 'package:uuid/uuid.dart';
 
 class CustomerViewModel extends ChangeNotifier {
+  String _token;
   bool _loading = false;
   List<Customer> _customerListModel = [];
+
+  CustomerViewModel(this._token, this._customerListModel);
 
   //GETTERS
   bool get loading => _loading;
@@ -58,7 +61,7 @@ class CustomerViewModel extends ChangeNotifier {
 
   getCustomers() async {
     setLoading(true);
-    var response = await CustomerService.getCustomers();
+    var response = await CustomerService.getCustomers(_token);
     if (response is Success) {
       //Map<String, dynamic> data = jsonDecode(response);
       if (_customerListModel.isNotEmpty) {
