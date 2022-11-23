@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sagos_mobile/utils/app_routes.dart';
 import 'package:sagos_mobile/utils/auth_exception.dart';
 import 'package:sagos_mobile/view_models/auth_view_model.dart';
 
@@ -32,6 +33,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       await authViewModel.autenticate(
           _authData['email']!, _authData['password']!);
+      Navigator.of(context).pushReplacementNamed(AppRoutes.AUTH_OR_HOME);
     } on AuthException catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {

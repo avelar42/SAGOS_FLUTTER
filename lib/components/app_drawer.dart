@@ -15,8 +15,8 @@ class AppDrawer extends StatelessWidget {
         ListTile(
           title: Text('Inicio'),
           leading: Icon(Icons.home),
-          onTap: () =>
-              Navigator.of(context).pushReplacementNamed(AppRoutes.HOME),
+          onTap: () => Navigator.of(context)
+              .pushReplacementNamed(AppRoutes.AUTH_OR_HOME),
         ),
         ListTile(
           title: Text('Ordens de Serviço'),

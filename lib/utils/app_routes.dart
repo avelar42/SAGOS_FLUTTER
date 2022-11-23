@@ -1,6 +1,5 @@
 class AppRoutes {
-  static const AUTH = '/';
-  static const HOME = '/home';
+  static const AUTH_OR_HOME = '/';
   static const CUSTOMERS = '/costumers';
   static const CUSTOMER_FORM = '/customerform';
   static const CUSTOMER_FORM_EDIT = '/customerformedit';

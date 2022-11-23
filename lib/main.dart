@@ -7,6 +7,7 @@ import 'package:sagos_mobile/views/address_screen.dart';
 import 'package:sagos_mobile/views/addressform_screen.dart';
 import 'package:sagos_mobile/views/asset_screen.dart';
 import 'package:sagos_mobile/views/assetform_screen.dart';
+import 'package:sagos_mobile/views/auth_or_home_screen.dart';
 import 'package:sagos_mobile/views/auth_page.dart';
 import 'package:sagos_mobile/views/customerform_screen.dart';
 import 'package:sagos_mobile/views/customerformedit_screen.dart';
@@ -46,8 +47,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
               backgroundColor: Colors.grey[200]),
           routes: {
-            AppRoutes.AUTH: (context) => AuthPage(),
-            AppRoutes.HOME: (context) => DashBoardScreen(),
+            AppRoutes.AUTH_OR_HOME: (context) => AuthOrHomeScreen(),
             AppRoutes.CUSTOMERS: (context) => CustomersScreen(),
             AppRoutes.CUSTOMER_FORM: (context) => CustomerFormScreen(),
             AppRoutes.CUSTOMER_FORM_EDIT: (context) => CustomerFormEditScreen(),
