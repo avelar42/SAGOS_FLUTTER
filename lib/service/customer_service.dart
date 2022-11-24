@@ -28,11 +28,12 @@ class CustomerService {
     }
   }
 
-  static Future<Object> saveCustomerService(Customer customerData) async {
+  static Future<Object> saveCustomerService(
+      String? token, Customer customerData) async {
     try {
       if (customerData.id.isEmpty) {
         final response =
-            await http.post(Uri.parse('${URL_BASE_CUSTOMERS}.json'),
+            await http.post(Uri.parse('${URL_BASE_CUSTOMERS}.json?auth=$token'),
                 body: jsonEncode({
                   "nome": customerData.nome,
                   "sobrenome": customerData.sobrenome,
@@ -46,7 +47,8 @@ class CustomerService {
         return id;
       } else {
         final response = await http.patch(
-            Uri.parse('${URL_BASE_CUSTOMERS}/${customerData.id}.json'),
+            Uri.parse(
+                '${URL_BASE_CUSTOMERS}/${customerData.id}.json?auth=$token'),
             body: jsonEncode({
               //"id": customerData.id,
               "nome": customerData.nome,
@@ -81,9 +83,10 @@ class CustomerService {
     }
   }
 
-  static Future<bool> removeCustomerService(Customer customerData) async {
-    final response = await http
-        .delete(Uri.parse('${URL_BASE_CUSTOMERS}/${customerData.id}.json'));
+  static Future<bool> removeCustomerService(
+      String? token, Customer customerData) async {
+    final response = await http.delete(
+        Uri.parse('${URL_BASE_CUSTOMERS}/${customerData.id}.json?auth=$token'));
     if (response.statusCode <= 400) {
       return true;
     } else {

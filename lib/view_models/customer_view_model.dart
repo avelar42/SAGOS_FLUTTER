@@ -78,7 +78,7 @@ class CustomerViewModel extends ChangeNotifier {
   saveCustomer(Map<String, Object> data) async {
     await setLoading(true);
     final customer = CustomerMapToObjectWithoutId(data);
-    var response = await CustomerService.saveCustomerService(customer);
+    var response = await CustomerService.saveCustomerService(_token, customer);
     customer.id = response.toString();
     _customerListModel.add(customer);
     await setLoading(false);
@@ -105,7 +105,8 @@ class CustomerViewModel extends ChangeNotifier {
       } else {
         customer.assets?.add(asset);
       }
-      var response = await CustomerService.saveCustomerService(customer);
+      var response =
+          await CustomerService.saveCustomerService(_token, customer);
     }
     await setLoading(false);
   }
@@ -133,7 +134,8 @@ class CustomerViewModel extends ChangeNotifier {
       } else {
         customer.address?.add(address);
       }
-      var response = await CustomerService.saveCustomerService(customer);
+      var response =
+          await CustomerService.saveCustomerService(_token, customer);
     }
     await setLoading(false);
   }
@@ -142,7 +144,8 @@ class CustomerViewModel extends ChangeNotifier {
     var index = _customerListModel.indexWhere((c) => c.id == customer.id);
     if (index >= 0) {
       setLoading(true);
-      var response = await CustomerService.removeCustomerService(customer);
+      var response =
+          await CustomerService.removeCustomerService(_token, customer);
       if (response == true) {
         _customerListModel.remove(customer);
         setLoading(false);
@@ -158,7 +161,8 @@ class CustomerViewModel extends ChangeNotifier {
     var costumer = _customerListModel[index];
     if (costumer != null) {
       costumer.assets!.remove(asset);
-      var response = await CustomerService.saveCustomerService(costumer);
+      var response =
+          await CustomerService.saveCustomerService(_token, costumer);
       _customerListModel.remove(asset);
     }
     setLoading(false);
@@ -170,7 +174,8 @@ class CustomerViewModel extends ChangeNotifier {
     var costumer = _customerListModel[index];
     if (costumer != null) {
       costumer.address!.remove(address);
-      var response = await CustomerService.saveCustomerService(costumer);
+      var response =
+          await CustomerService.saveCustomerService(_token, costumer);
       costumer.address!.remove(address);
     }
     setLoading(false);
@@ -181,7 +186,8 @@ class CustomerViewModel extends ChangeNotifier {
     var index = _customerListModel.indexWhere((c) => c.id == customer.id);
     if (index >= 0) {
       setLoading(true);
-      var response = await CustomerService.saveCustomerService(customer);
+      var response =
+          await CustomerService.saveCustomerService(_token, customer);
       _customerListModel[index] = customer;
       setLoading(false);
     }
