@@ -1,3 +1,5 @@
+import 'dart:async';
+
 class Auth {
   String? _token;
   String? _email;
@@ -35,6 +37,10 @@ class Auth {
 
   String? get uid {
     return isAuth ? _uid : null;
+  }
+
+  DateTime? get expireDate {
+    return isAuth ? _expiryDate : null;
   }
 
   void removeCredentials() {

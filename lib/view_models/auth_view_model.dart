@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -7,6 +8,7 @@ import '../model/auth.dart';
 
 class AuthViewModel extends ChangeNotifier {
   Auth _auth = new Auth();
+  Timer? _logoutTimer;
 
   bool get isAuth {
     return _auth.isAuth;
@@ -29,6 +31,7 @@ class AuthViewModel extends ChangeNotifier {
       _auth.setUid(body['localId']);
       _auth.setExpireDate(
           DateTime.now().add(Duration(seconds: int.parse(body['expiresIn']))));
+      autoLogout();
       notifyListeners();
     }
 
@@ -37,6 +40,19 @@ class AuthViewModel extends ChangeNotifier {
 
   void logout() {
     _auth.removeCredentials();
+    _clearLogoutTimer();
     notifyListeners();
+  }
+
+  void _clearLogoutTimer() {
+    _logoutTimer?.cancel();
+    _logoutTimer = null;
+  }
+
+  void autoLogout() {
+    _clearLogoutTimer();
+    final timeToLogout = _auth.expireDate?.difference(DateTime.now()).inSeconds;
+    print(timeToLogout);
+    _logoutTimer = Timer(Duration(seconds: timeToLogout ?? 0), logout);
   }
 }
