@@ -36,4 +36,11 @@ class Auth {
   String? get uid {
     return isAuth ? _uid : null;
   }
+
+  void removeCredentials() {
+    _token = null;
+    _email = null;
+    _uid = null;
+    _expiryDate = null;
+  }
 }

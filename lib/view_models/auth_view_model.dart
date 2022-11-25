@@ -34,4 +34,9 @@ class AuthViewModel extends ChangeNotifier {
 
     // print(body);
   }
+
+  void logout() {
+    _auth.removeCredentials();
+    notifyListeners();
+  }
 }
