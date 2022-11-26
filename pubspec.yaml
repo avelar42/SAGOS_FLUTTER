@@ -34,6 +34,7 @@ dependencies:
   http: ^0.13.3
   mask_text_input_formatter: ^2.4.0
   uuid: ^3.0.6
+  shared_preferences: ^2.0.15
 
 
   # The following adds the Cupertino Icons font to your application.

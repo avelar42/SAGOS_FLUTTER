@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:sagos_mobile/data/store.dart';
 import 'package:sagos_mobile/utils/auth_exception.dart';
 import 'package:sagos_mobile/utils/constants.dart';
 import '../model/auth.dart';
@@ -31,6 +32,12 @@ class AuthViewModel extends ChangeNotifier {
       _auth.setUid(body['localId']);
       _auth.setExpireDate(
           DateTime.now().add(Duration(seconds: int.parse(body['expiresIn']))));
+      Store.saveMap('userData', {
+        'token': _auth.token,
+        'email': _auth.email,
+        'userId': _auth.uid,
+        'expireDate': _auth.expireDate!.toIso8601String(),
+      });
       autoLogout();
       notifyListeners();
     }
@@ -54,5 +61,20 @@ class AuthViewModel extends ChangeNotifier {
     final timeToLogout = _auth.expireDate?.difference(DateTime.now()).inSeconds;
     print(timeToLogout);
     _logoutTimer = Timer(Duration(seconds: timeToLogout ?? 0), logout);
+  }
+
+  Future<void> tryAutoLogin() async {
+    if (_auth.isAuth) return;
+    final userData = await Store.getMap('userData');
+    if (userData.isEmpty) return;
+    final expiryDate = DateTime.parse(userData['expireDate']);
+    if (expiryDate.isBefore(DateTime.now())) return;
+    _auth.setToken(userData['token']);
+    _auth.setEmail(userData['email']);
+    _auth.setUid(userData['userId']);
+    _auth.setExpireDate(expiryDate);
+
+    autoLogout();
+    notifyListeners();
   }
 }
