@@ -48,7 +48,9 @@ class AuthViewModel extends ChangeNotifier {
   void logout() {
     _auth.removeCredentials();
     _clearLogoutTimer();
-    notifyListeners();
+    Store.remove('userData').then((_) {
+      notifyListeners();
+    });
   }
 
   void _clearLogoutTimer() {
