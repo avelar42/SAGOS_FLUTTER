@@ -42,7 +42,7 @@ class _AssetsScreenState extends State<AssetsScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM,
                     arguments: [
-                      Asset(id: '', descricao: '', codigo: ''),
+                      Asset(id: '', descricao: '', identificacao: ''),
                       _customerId
                     ]);
               },

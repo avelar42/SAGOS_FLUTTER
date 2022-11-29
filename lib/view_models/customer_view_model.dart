@@ -39,10 +39,7 @@ class CustomerViewModel extends ChangeNotifier {
               : null,
           assets: customerValue['assets'] != null
               ? (customerValue['assets'] as List<dynamic>).map((asset) {
-                  return Asset(
-                      id: asset['id'],
-                      descricao: asset['descricao'],
-                      codigo: asset['codigo']);
+                  return Asset(id: asset['id'], descricao: asset['descricao']);
                 }).toList()
               : null,
           address: customerValue['address'] != null
@@ -97,7 +94,7 @@ class CustomerViewModel extends ChangeNotifier {
       if (assetIndex! >= 0) {
         var asset = customer.assets![assetIndex] as Asset;
         asset.id = data['id'].toString();
-        asset.codigo = data['codigo'].toString();
+        // asset.codigo = data['codigo'].toString();
         asset.descricao = data['descricao'].toString();
         asset.identificacao = data['identificacao'].toString();
 
@@ -227,7 +224,6 @@ class CustomerViewModel extends ChangeNotifier {
     final asset = Asset(
         id: data['id'] != "" ? data['id'].toString() : Uuid().v1().toString(),
         descricao: data['descricao'] as String,
-        codigo: data['codigo'] as String,
         identificacao: data['identificacao'] as String);
     return asset;
   }

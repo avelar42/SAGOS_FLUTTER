@@ -39,7 +39,6 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
       _formData['customerId'] = arg[1].toString();
       if (asset != null) {
         _formData['id'] = asset.id.toString();
-        _formData['codigo'] = asset.codigo.toString();
         _formData['descricao'] = asset.descricao.toString();
         _formData['identificacao'] = asset.identificacao.toString();
       }
@@ -60,13 +59,6 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             key: _formKey,
             child: ListView(
               children: [
-                TextFormField(
-                  initialValue: _formData['codigo']?.toString(),
-                  decoration: InputDecoration(label: Text('Código')),
-                  keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
-                  onSaved: (codigo) => _formData['codigo'] = codigo ?? "",
-                ),
                 TextFormField(
                   initialValue: _formData['descricao']?.toString(),
                   decoration: InputDecoration(label: Text('Descrição')),

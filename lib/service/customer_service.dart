@@ -59,7 +59,6 @@ class CustomerService {
               "assets": customerData.assets
                   ?.map((asset) => {
                         'id': asset.id,
-                        'codigo': asset.codigo,
                         'descricao': asset.descricao,
                         'identificacao': asset.identificacao
                       })
