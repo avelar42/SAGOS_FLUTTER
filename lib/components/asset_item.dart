@@ -14,7 +14,9 @@ class AssetItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(asset.descricao),
-      subtitle: Text(asset.identificacao.toString()),
+      subtitle: asset.identificacao != null
+          ? Text(asset.identificacao.toString())
+          : null,
       trailing: Container(
         width: 150,
         child: Row(

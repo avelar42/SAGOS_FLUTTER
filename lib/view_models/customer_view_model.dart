@@ -39,7 +39,10 @@ class CustomerViewModel extends ChangeNotifier {
               : null,
           assets: customerValue['assets'] != null
               ? (customerValue['assets'] as List<dynamic>).map((asset) {
-                  return Asset(id: asset['id'], descricao: asset['descricao']);
+                  return Asset(
+                      id: asset['id'],
+                      descricao: asset['descricao'],
+                      identificacao: asset['identificacao']);
                 }).toList()
               : null,
           address: customerValue['address'] != null
