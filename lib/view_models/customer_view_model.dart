@@ -42,7 +42,8 @@ class CustomerViewModel extends ChangeNotifier {
                   return Asset(
                       id: asset['id'],
                       descricao: asset['descricao'],
-                      identificacao: asset['identificacao']);
+                      identificacao: asset['identificacao'],
+                      ativo: true);
                 }).toList()
               : null,
           address: customerValue['address'] != null
@@ -226,6 +227,7 @@ class CustomerViewModel extends ChangeNotifier {
   Asset AssetMapToObject(Map<String, Object> data) {
     final asset = Asset(
         id: data['id'] != "" ? data['id'].toString() : Uuid().v1().toString(),
+        ativo: true,
         descricao: data['descricao'] as String,
         identificacao: data['identificacao'] as String);
     return asset;

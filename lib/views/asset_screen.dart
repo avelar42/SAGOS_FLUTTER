@@ -40,11 +40,11 @@ class _AssetsScreenState extends State<AssetsScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM,
-                    arguments: [
-                      Asset(id: '', descricao: '', identificacao: ''),
-                      _customerId
-                    ]);
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.CUSTOMER_ASSET_FORM, arguments: [
+                  Asset(id: '', descricao: '', identificacao: '', ativo: true),
+                  _customerId
+                ]);
               },
               icon: Icon(Icons.add))
         ],

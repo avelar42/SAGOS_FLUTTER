@@ -60,7 +60,8 @@ class CustomerService {
                   ?.map((asset) => {
                         'id': asset.id,
                         'descricao': asset.descricao,
-                        'identificacao': asset.identificacao
+                        'identificacao': asset.identificacao,
+                        'ativo': asset.ativo
                       })
                   .toList(),
               "address": customerData.address
