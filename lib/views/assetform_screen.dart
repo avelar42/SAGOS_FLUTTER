@@ -64,14 +64,36 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                   decoration: InputDecoration(label: Text('Descrição')),
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
+                  validator: (_descricao) {
+                    final descricao = _descricao ?? '';
+                    if (descricao.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    if (descricao.isNotEmpty) {
+                      if (descricao.length > 10) {
+                        return 'Limite 255 caracteres.';
+                      }
+                    }
+                    return null;
+                  },
                   onSaved: (descricao) =>
                       _formData['descricao'] = descricao ?? "",
                 ),
                 TextFormField(
                   initialValue: _formData['identificacao']?.toString(),
-                  decoration: InputDecoration(label: Text('Identificação')),
+                  decoration:
+                      InputDecoration(label: Text('Identificação (Placa)')),
                   keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
+                  validator: (_identificacao) {
+                    final identificacao = _identificacao ?? '';
+                    if (identificacao.isNotEmpty) {
+                      if (identificacao.length > 7) {
+                        return 'Limite 7 caracteres';
+                      }
+                    }
+                    return null;
+                  },
                   onSaved: (identificacao) =>
                       _formData['identificacao'] = identificacao ?? "",
                 ),
