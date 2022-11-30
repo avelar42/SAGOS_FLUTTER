@@ -43,7 +43,7 @@ class CustomerViewModel extends ChangeNotifier {
                       id: asset['id'],
                       descricao: asset['descricao'],
                       identificacao: asset['identificacao'],
-                      ativo: true);
+                      ativo: asset['ativo']);
                 }).toList()
               : null,
           address: customerValue['address'] != null
@@ -98,7 +98,7 @@ class CustomerViewModel extends ChangeNotifier {
       if (assetIndex! >= 0) {
         var asset = customer.assets![assetIndex] as Asset;
         asset.id = data['id'].toString();
-        // asset.codigo = data['codigo'].toString();
+        asset.ativo = asset.ativo;
         asset.descricao = data['descricao'].toString();
         asset.identificacao = data['identificacao'].toString();
 
@@ -165,6 +165,23 @@ class CustomerViewModel extends ChangeNotifier {
       var response =
           await CustomerService.saveCustomerService(_token, costumer);
       _customerListModel.remove(asset);
+    }
+    setLoading(false);
+  }
+
+  Future<void> changeAssetStatus(Asset asset, String customerid) async {
+    setLoading(true);
+    var customerIndex =
+        _customerListModel.indexWhere((c) => c.id == customerid);
+    var customer = _customerListModel[customerIndex];
+    if (customer != null) {
+      var assetIndex = customer.assets!.indexWhere((a) => a.id == asset.id);
+      var assetValue = customer.assets![assetIndex];
+      if (asset != null) {
+        asset.ativo = !asset.ativo;
+        var response =
+            await CustomerService.saveCustomerService(_token, customer);
+      }
     }
     setLoading(false);
   }

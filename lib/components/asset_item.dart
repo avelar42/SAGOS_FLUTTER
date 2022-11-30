@@ -56,9 +56,12 @@ class AssetItem extends StatelessWidget {
                 icon: Icon(Icons.delete),
                 color: Colors.red),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<CustomerViewModel>(context, listen: false)
+                      .changeAssetStatus(asset, customerId);
+                },
                 icon: Icon(Icons.check_circle),
-                color: Colors.green)
+                color: asset.ativo == true ? Colors.green : Colors.grey)
           ],
         ),
       ),
