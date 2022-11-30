@@ -70,7 +70,7 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                       return 'Campo obrigatório';
                     }
                     if (descricao.isNotEmpty) {
-                      if (descricao.length > 10) {
+                      if (descricao.length > 255) {
                         return 'Limite 255 caracteres.';
                       }
                     }
