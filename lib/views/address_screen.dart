@@ -34,11 +34,18 @@ class _AddressScreenState extends State<AddressScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM,
-                    arguments: [
-                      Address(id: '', rua: '', numero: 0),
-                      _customerId
-                    ]);
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM, arguments: [
+                  Address(
+                    cep: '',
+                    id: '',
+                    rua: '',
+                    numero: null,
+                    bairro: '',
+                    cidade: '',
+                  ),
+                  _customerId
+                ]);
               },
               icon: Icon(Icons.add))
         ],

@@ -37,7 +37,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
         _formData['id'] = address.id;
         _formData['rua'] = address.rua.toString();
         _formData['cep'] = address.cep.toString();
-        _formData['numero'] = address.numero;
+        _formData['numero'] = address.numero ?? '';
         _formData['bairro'] = address.bairro.toString();
         _formData['cidade'] = address.cidade.toString();
       }

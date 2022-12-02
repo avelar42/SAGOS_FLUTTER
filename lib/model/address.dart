@@ -12,5 +12,5 @@ class Address {
   String rua;
   String? bairro;
   String? cidade;
-  int numero;
+  int? numero;
 }
