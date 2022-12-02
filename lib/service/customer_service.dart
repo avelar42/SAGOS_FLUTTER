@@ -71,7 +71,8 @@ class CustomerService {
                         'rua': address.rua,
                         'numero': address.numero,
                         'bairro': address.bairro,
-                        'cidade': address.cidade
+                        'cidade': address.cidade,
+                        'ativo': address.ativo
                       })
                   .toList()
             }));

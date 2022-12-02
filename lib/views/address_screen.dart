@@ -37,13 +37,13 @@ class _AddressScreenState extends State<AddressScreen> {
                 Navigator.of(context)
                     .pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM, arguments: [
                   Address(
-                    cep: '',
-                    id: '',
-                    rua: '',
-                    numero: null,
-                    bairro: '',
-                    cidade: '',
-                  ),
+                      cep: '',
+                      id: '',
+                      rua: '',
+                      numero: null,
+                      bairro: '',
+                      cidade: '',
+                      ativo: true),
                   _customerId
                 ]);
               },

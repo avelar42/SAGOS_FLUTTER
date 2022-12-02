@@ -57,9 +57,12 @@ class AddressItem extends StatelessWidget {
               color: Colors.red,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<CustomerViewModel>(context, listen: false)
+                    .changeAddressStatus(address, customerId);
+              },
               icon: Icon(Icons.check_circle),
-              color: Colors.green,
+              color: address.ativo == true ? Colors.green : Colors.grey,
             )
           ],
         ),

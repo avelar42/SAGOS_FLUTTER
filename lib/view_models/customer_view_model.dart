@@ -54,7 +54,8 @@ class CustomerViewModel extends ChangeNotifier {
                       numero: 180,
                       cep: address['cep'],
                       bairro: address['bairro'],
-                      cidade: address['cidade']);
+                      cidade: address['cidade'],
+                      ativo: address['ativo']);
                 }).toList()
               : null));
     });
@@ -186,6 +187,24 @@ class CustomerViewModel extends ChangeNotifier {
     setLoading(false);
   }
 
+  Future<void> changeAddressStatus(Address address, String customerid) async {
+    setLoading(true);
+    var customerIndex =
+        _customerListModel.indexWhere((c) => c.id == customerid);
+    var customer = _customerListModel[customerIndex];
+    if (customer != null) {
+      var addressIndex =
+          customer.address!.indexWhere((a) => a.id == address.id);
+      var addressValue = customer.address![addressIndex];
+      if (address != null) {
+        address.ativo = !address.ativo;
+        var response =
+            await CustomerService.saveCustomerService(_token, customer);
+      }
+    }
+    setLoading(false);
+  }
+
   Future<void> removeAddress(Address address, String customerid) async {
     setLoading(true);
     var index = _customerListModel.indexWhere((c) => c.id == customerid);
@@ -254,6 +273,7 @@ class CustomerViewModel extends ChangeNotifier {
     final address = Address(
         id: data['id'] != "" ? data['id'].toString() : Uuid().v1().toString(),
         rua: data['rua'].toString(),
+        ativo: true,
         numero: int.parse(data['numero'].toString()),
         bairro: data['bairro'].toString(),
         cep: data['cep'].toString(),

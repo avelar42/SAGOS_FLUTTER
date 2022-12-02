@@ -1,6 +1,7 @@
 class Address {
   Address(
-      {required this.id,
+      {required this.ativo,
+      required this.id,
       this.cep,
       required this.rua,
       this.bairro,
@@ -13,4 +14,5 @@ class Address {
   String? bairro;
   String? cidade;
   int? numero;
+  bool ativo;
 }
