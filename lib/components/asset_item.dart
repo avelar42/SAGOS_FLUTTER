@@ -13,6 +13,7 @@ class AssetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: Colors.white,
       title: Text(asset.descricao),
       subtitle: asset.identificacao != null
           ? Text(asset.identificacao.toString())

@@ -15,6 +15,7 @@ class AddressItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: Colors.white,
       title: Text('${address.rua} - ${address.numero}'),
       subtitle: Text('${address.cidade}'),
       trailing: Container(

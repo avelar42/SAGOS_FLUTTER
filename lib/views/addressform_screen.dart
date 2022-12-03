@@ -134,7 +134,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     validator: (_cidade) {
                       final cidade = _cidade;
                       if (cidade!.isNotEmpty) {
-                        if (cidade.length > 10) {
+                        if (cidade.length > 255) {
                           return 'Min 255 caracteres';
                         }
                       }

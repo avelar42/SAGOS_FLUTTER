@@ -35,33 +35,36 @@ class _AssetsScreenState extends State<AssetsScreen> {
     final Customer customer = customerViewModel.getCustomer(_customerId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ativos'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(AppRoutes.CUSTOMER_ASSET_FORM, arguments: [
-                  Asset(id: '', descricao: '', identificacao: '', ativo: true),
-                  _customerId
-                ]);
-              },
-              icon: Icon(Icons.add))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-          itemBuilder: (context, index) => Column(
-            children: [
-              customer.assets != null
-                  ? AssetItem(customer.assets![index], customer.id)
-                  : Text('Nao possui dados')
-            ],
-          ),
-          itemCount: customer.assets != null ? customer.assets!.length : 0,
+        appBar: AppBar(
+          title: Text('Ativos'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.CUSTOMER_ASSET_FORM,
+                      arguments: [
+                        Asset(
+                            id: '',
+                            descricao: '',
+                            identificacao: '',
+                            ativo: true),
+                        _customerId
+                      ]);
+                },
+                icon: Icon(Icons.add))
+          ],
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+            itemBuilder: (context, index) => Column(
+              children: [
+                AssetItem(customer.assets![index], customer.id),
+                Padding(padding: EdgeInsets.all(3))
+              ],
+            ),
+            itemCount: customer.assets != null ? customer.assets!.length : 0,
+          ),
+        ),
+        backgroundColor: Theme.of(context).backgroundColor);
   }
 }

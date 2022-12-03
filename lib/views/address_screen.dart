@@ -29,39 +29,39 @@ class _AddressScreenState extends State<AddressScreen> {
     final Customer customer = customerViewModel.getCustomer(_customerId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Endereços'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM, arguments: [
-                  Address(
-                      cep: '',
-                      id: '',
-                      rua: '',
-                      numero: null,
-                      bairro: '',
-                      cidade: '',
-                      ativo: true),
-                  _customerId
-                ]);
-              },
-              icon: Icon(Icons.add))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-            itemBuilder: ((context, index) => Column(
-                  children: [
-                    customer.address != null
-                        ? AddressItem(customer.address![index], _customerId)
-                        : Text('Nao possui dados')
-                  ],
-                )),
-            itemCount: customer.address != null ? customer.address!.length : 0),
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Endereços'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AppRoutes.CUSTOMER_ADDRESS_FORM, arguments: [
+                    Address(
+                        cep: '',
+                        id: '',
+                        rua: '',
+                        numero: null,
+                        bairro: '',
+                        cidade: '',
+                        ativo: true),
+                    _customerId
+                  ]);
+                },
+                icon: Icon(Icons.add))
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+              itemBuilder: ((context, index) => Column(
+                    children: [
+                      AddressItem(customer.address![index], _customerId),
+                      Padding(padding: EdgeInsets.all(3))
+                    ],
+                  )),
+              itemCount:
+                  customer.address != null ? customer.address!.length : 0),
+        ),
+        backgroundColor: Theme.of(context).backgroundColor);
   }
 }
