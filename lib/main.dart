@@ -13,6 +13,7 @@ import 'package:sagos_mobile/views/customerform_screen.dart';
 import 'package:sagos_mobile/views/customerformedit_screen.dart';
 import 'package:sagos_mobile/views/customers_screen.dart';
 import 'package:sagos_mobile/views/dashboard_screen.dart';
+import 'package:sagos_mobile/views/workorder_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
             AppRoutes.CUSTOMER_ASSETS: (context) => AssetsScreen(),
             AppRoutes.CUSTOMER_ADDRESS: (context) => AddressScreen(),
             AppRoutes.CUSTOMER_ASSET_FORM: (context) => AssetFormScreen(),
-            AppRoutes.CUSTOMER_ADDRESS_FORM: (context) => AddressFormScreen()
+            AppRoutes.CUSTOMER_ADDRESS_FORM: (context) => AddressFormScreen(),
+            AppRoutes.WORKORDER: (context) => WorkOrderScreen()
           },
           debugShowCheckedModeBanner: false,
         ));

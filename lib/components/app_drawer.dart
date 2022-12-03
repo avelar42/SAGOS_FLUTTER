@@ -16,7 +16,7 @@ class AppDrawer extends StatelessWidget {
           title: Text('${userName}'),
         ),
         ListTile(
-          title: Text('Inicio'),
+          title: Text('Inicio/Dashboard'),
           leading: Icon(Icons.home),
           onTap: () => Navigator.of(context)
               .pushReplacementNamed(AppRoutes.AUTH_OR_HOME),
@@ -25,7 +25,7 @@ class AppDrawer extends StatelessWidget {
           title: Text('Ordens de Serviço'),
           leading: Icon(Icons.payment),
           onTap: () =>
-              Navigator.of(context).pushReplacementNamed(AppRoutes.CUSTOMERS),
+              Navigator.of(context).pushReplacementNamed(AppRoutes.WORKORDER),
         ),
         ListTile(
           title: Text('Clientes'),
