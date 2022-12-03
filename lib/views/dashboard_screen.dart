@@ -9,7 +9,14 @@ class DashBoardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('SAGOS')),
       drawer: AppDrawer(),
-      body: Text('Corpo do APP!'),
+      body: Container(
+        child: Center(
+          child: Image.asset(
+            'assets/images/under_construction.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }

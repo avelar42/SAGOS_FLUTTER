@@ -65,6 +65,15 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     onSaved: (cep) => _formData['cep'] = cep.toString(),
+                    validator: (_cep) {
+                      final cep = _cep;
+                      if (cep!.isNotEmpty) {
+                        if (cep.length > 6 || cep.length < 6) {
+                          return 'CEP possui 6 digitos';
+                        }
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     initialValue: _formData['rua']?.toString(),
@@ -72,6 +81,16 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.next,
                     onSaved: (rua) => _formData['rua'] = rua.toString(),
+                    validator: (_rua) {
+                      final rua = _rua;
+                      if (rua!.isEmpty) {
+                        return 'Rua e obrigatorio';
+                      }
+                      if (_rua!.length > 255) {
+                        return 'Min 255 caracteres';
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     initialValue: _formData['numero']?.toString(),
@@ -80,6 +99,13 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     textInputAction: TextInputAction.next,
                     onSaved: (numero) =>
                         _formData['numero'] = numero.toString(),
+                    validator: (_numero) {
+                      final numero = _numero;
+                      if (numero!.isEmpty) {
+                        return 'Min 10 caracteres';
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     initialValue: _formData['bairro']?.toString(),
@@ -88,6 +114,15 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     textInputAction: TextInputAction.next,
                     onSaved: (bairro) =>
                         _formData['bairro'] = bairro.toString(),
+                    validator: (_bairro) {
+                      final bairro = _bairro;
+                      if (bairro!.isNotEmpty) {
+                        if (bairro.length > 10) {
+                          return 'Min 255 caracteres';
+                        }
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     initialValue: _formData['cidade']?.toString(),
@@ -96,6 +131,15 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                     textInputAction: TextInputAction.done,
                     onSaved: (cidade) =>
                         _formData['cidade'] = cidade.toString(),
+                    validator: (_cidade) {
+                      final cidade = _cidade;
+                      if (cidade!.isNotEmpty) {
+                        if (cidade.length > 10) {
+                          return 'Min 255 caracteres';
+                        }
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ))),
