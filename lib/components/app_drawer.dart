@@ -9,10 +9,11 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userName = Provider.of<AuthViewModel>(context).getUserName;
     return Drawer(
       child: Column(children: [
         AppBar(
-          title: Text('Welcome User!'),
+          title: Text('${userName}'),
         ),
         ListTile(
           title: Text('Inicio'),

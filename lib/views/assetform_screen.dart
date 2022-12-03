@@ -49,6 +49,7 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Cadastro de Ativo'),
         actions: [IconButton(onPressed: _submitForm, icon: Icon(Icons.save))],

@@ -63,6 +63,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   Widget build(BuildContext context) {
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(title: Text('Formulario de clientes'), actions: [
         IconButton(onPressed: _submitForm, icon: Icon(Icons.save))
       ]),
