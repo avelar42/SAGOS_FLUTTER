@@ -7,9 +7,16 @@ class DashBoardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('SAGOS')),
+      appBar: AppBar(title: Text('Inicio/Dashboard')),
       drawer: AppDrawer(),
-      body: Text('Corpo do APP!'),
+      body: Container(
+        child: Center(
+          child: Image.asset(
+            'assets/images/under_construction.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }

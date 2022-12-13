@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:sagos_mobile/model/customer.dart';
+import 'package:sagos_mobile/utils/app_routes.dart';
 import 'package:sagos_mobile/view_models/customer_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CustomerFormScreen extends StatefulWidget {
-  const CustomerFormScreen({Key? key}) : super(key: key);
+class CustomerFormEditScreen extends StatefulWidget {
+  const CustomerFormEditScreen({Key? key}) : super(key: key);
 
   @override
-  _CustomerFormScreenState createState() => _CustomerFormScreenState();
+  _CustomerFormEditScreenState createState() => _CustomerFormEditScreenState();
 }
 
-class _CustomerFormScreenState extends State<CustomerFormScreen> {
+class _CustomerFormEditScreenState extends State<CustomerFormEditScreen> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   DateTime? pickedDate = null;
@@ -26,7 +28,6 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
-  //TO DO: IMPLEMENT PROVIDER HERE
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) {
@@ -34,20 +35,41 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
     }
 
     _formKey.currentState?.save();
-
     if (pickedDate != null) {
       _formData['dataNascimento'] = pickedDate.toString();
     }
     await Provider.of<CustomerViewModel>(context, listen: false)
-        .saveCustomer(_formData);
+        .updateCustomer(_formData);
     print(_formData);
     Navigator.of(context).pop();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    if (_formData.isEmpty) {
+      final arg = ModalRoute.of(context)?.settings.arguments;
+      if (arg != null) {
+        final customer = arg as Customer;
+        _formData['id'] = customer.id;
+        _formData['nome'] = customer.nome;
+        _formData['sobrenome'] = customer.sobrenome;
+        _formData['CPF'] = customer.cpf.toString();
+        _formData['telefone'] = customer.telefone.toString();
+        _formData['dataNascimento'] = customer.dataNascimento != null
+            ? customer.dataNascimento.toString()
+            : '';
+        pickedDate = customer.dataNascimento;
+      }
+    }
   }
 
   _showDatePicker() async {
     var pickedDateForm = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate:
+            pickedDate == null ? DateTime.now() : pickedDate as DateTime,
         firstDate: DateTime(1940),
         lastDate: DateTime.now());
     if (pickedDateForm == null) {
@@ -63,8 +85,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   Widget build(BuildContext context) {
     CustomerViewModel customerViewModel = context.watch<CustomerViewModel>();
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(title: Text('Formulario de clientes'), actions: [
+      appBar: AppBar(title: Text('Editar dados Cliente'), actions: [
         IconButton(onPressed: _submitForm, icon: Icon(Icons.save))
       ]),
       body: customerViewModel.loading
@@ -75,11 +96,49 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                   key: _formKey,
                   child: ListView(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0, bottom: 0.0, right: 0.0, top: 5.0),
+                            child: SizedBox(
+                                height: 30,
+                                width: 60,
+                                child: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed(
+                                          AppRoutes.CUSTOMER_ASSETS,
+                                          arguments: [
+                                            ModalRoute.of(context)
+                                                ?.settings
+                                                .arguments as Customer
+                                          ]);
+                                    },
+                                    child: Text('Ativos'))),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1.0, bottom: 0.0, right: 5.0, top: 5.0),
+                            child: SizedBox(
+                              height: 30,
+                              width: 90,
+                              child: TextButton(
+                                  onPressed: () => Navigator.of(context)
+                                      .pushNamed(AppRoutes.CUSTOMER_ADDRESS,
+                                          arguments: ModalRoute.of(context)
+                                              ?.settings
+                                              .arguments as Customer),
+                                  child: Text('Endereços')),
+                            ),
+                          )
+                        ],
+                      ),
+                      Divider(color: Colors.black45),
                       TextFormField(
+                        initialValue: _formData['nome']?.toString(),
                         decoration: InputDecoration(labelText: 'Nome'),
                         onSaved: (name) => _formData['nome'] = name ?? '',
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
                         validator: (_name) {
                           final name = _name ?? '';
                           if (name.trim().isEmpty) {
@@ -92,11 +151,10 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         },
                       ),
                       TextFormField(
+                        initialValue: _formData['sobrenome']?.toString(),
                         decoration: InputDecoration(labelText: 'Sobrenome'),
                         onSaved: (lastname) =>
                             _formData['sobrenome'] = lastname ?? '',
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
                         validator: (_lastName) {
                           final lastName = _lastName ?? '';
                           if (lastName.trim().isEmpty) {
@@ -109,12 +167,13 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         },
                       ),
                       TextFormField(
+                        initialValue: phoneMask
+                            .maskText(_formData['telefone'].toString()),
                         decoration: InputDecoration(labelText: 'Telefone'),
                         onSaved: (phone) => _formData['telefone'] =
-                            phoneMask.getUnmaskedText() ?? '',
-                        keyboardType: TextInputType.phone,
+                            phoneMask.unmaskText(phone.toString()),
                         inputFormatters: [phoneMask],
-                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.phone,
                         validator: (_phone) {
                           final phone = _phone ?? '';
                           if (phone.isNotEmpty) {
@@ -126,12 +185,13 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         },
                       ),
                       TextFormField(
+                        initialValue:
+                            cpfMask.maskText(_formData['CPF'].toString()),
                         decoration: InputDecoration(labelText: 'CPF'),
-                        onSaved: (cpf) =>
-                            _formData['CPF'] = cpfMask.getUnmaskedText() ?? '',
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
+                        onSaved: (cpf) => _formData['CPF'] =
+                            phoneMask.unmaskText(cpf.toString()),
                         inputFormatters: [cpfMask],
+                        keyboardType: TextInputType.number,
                         validator: (_cpf) {
                           final cpf = _cpf ?? '';
                           if (cpf.isNotEmpty) {
@@ -143,21 +203,16 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 0, top: 15, bottom: 15),
-                        child: Text(
-                          'Data de nascimento',
-                          style:
-                              TextStyle(fontSize: 15, color: Colors.blueGrey),
-                        ),
-                      ),
+                          padding: EdgeInsets.only(
+                              right: 0, left: 0, top: 10, bottom: 10)),
+                      Text('Data Nascimento'),
                       Container(
                         child: Row(
                           children: [
-                            Text(_formData['dataNascimento'] == null
+                            Text(_formData['dataNascimento'] == ''
                                 ? 'Insira uma data'
-                                : DateFormat('d/M/y').format(
-                                    _formData['dataNascimento'] as DateTime)),
+                                : DateFormat('d/M/y').format(DateTime.parse(
+                                    _formData['dataNascimento'].toString()))),
                             IconButton(
                               onPressed: _showDatePicker,
                               icon: Icon(Icons.calendar_month),
@@ -166,12 +221,12 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                           ],
                         ),
                       )
-
                       // TextFormField(
+                      //   initialValue: _formData['dataNascimento']?.toString(),
                       //   decoration:
                       //       InputDecoration(labelText: 'Data Nascimento'),
                       //   onSaved: (birth) =>
-                      //       _formData['dataNascimento'] = DateTime.now() ?? '',
+                      //       _formData['dataNascimento'] = DateTime.now(),
                       // )
                     ],
                   )),
